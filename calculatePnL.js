@@ -22,4 +22,21 @@ const funds = [
 
   const equityfunds = funds.filter(funds => funds.category === "equity")
   .map(funds => funds.name);
-  console.log(equityfunds);
+
+    const return1ymorethan10 = funds.filter(funds => funds.return1y > 10)
+    .map(funds => ({
+        name : funds.name,
+        return1y : funds.return1y
+    }));
+
+    const NotHighRisk = funds.filter(funds => funds.risk !== "high")
+    .map(funds => funds.name)
+
+    const sortedfunds = return1ymorethan10.sort
+    ((a,b) => a.return1y - b.return1y);
+
+    const sortedByName = return1ymorethan10.sort(
+        (a,b) => a.name.localeCompare(b.name)
+    );
+    
+  console.log(sortedByName);
