@@ -12,5 +12,14 @@ const calculatePnL = (units, purchaseNav, currentNav) => {
     };
 }
 
-const result = calculatePnL(100, 45.5, 52.3);
-console.log(result);
+const funds = [
+  { name: "SBI Bluechip", category: "equity", return1y: 18.5, risk: "high" },
+  { name: "HDFC Short Term", category: "debt", return1y: 7.2, risk: "low" },
+  { name: "Axis Mid Cap", category: "equity", return1y: 22.1, risk: "high" },
+  { name: "ICICI Balanced", category: "hybrid", return1y: 12.3, risk: "moderate" },
+  { name: "Kotak Liquid", category: "debt", return1y: 6.5, risk: "low" },
+  { name: "Mirae Large Cap", category: "equity", return1y: 19.8, risk: "high" },]
+
+  const equityfunds = funds.filter(funds => funds.category === "equity")
+  .map(funds => funds.name);
+  console.log(equityfunds);
