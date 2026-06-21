@@ -11,3 +11,6 @@ function calculatePnL(units, purchaseNav, currentNav) {
         gainPercentage: gainPercentage.toFixed(2) + '%'
     };
 }
+
+const result = calculatePnL(100, 45.5, 52.3);
+console.log(result);
