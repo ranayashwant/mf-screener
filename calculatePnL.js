@@ -5,10 +5,10 @@ const calculatePnL = (units, purchaseNav, currentNav) => {
     const gainPercentage = (gain / investedAmount) * 100;
     
     return {
-        investedAmount: investedAmount.toFixed(2),
-        currentValue: currentValue.toFixed(2),      
-        gain: gain.toFixed(2),
-        gainPercentage: gainPercentage.toFixed(2) + '%'
+        investedAmount,
+        currentValue,      
+        gain,
+        gainPercentage
     };
 }
 
@@ -20,23 +20,38 @@ const funds = [
   { name: "Kotak Liquid", category: "debt", return1y: 6.5, risk: "low" },
   { name: "Mirae Large Cap", category: "equity", return1y: 19.8, risk: "high" },]
 
-  const equityfunds = funds.filter(funds => funds.category === "equity")
-  .map(funds => funds.name);
+  const equityfunds = (funds) => funds.filter(funds => funds.category === "equity")
+  .map(funds => ({
+        name : funds.name,
+        return1y : funds.return1y
+    }));
 
-    const return1ymorethan10 = funds.filter(funds => funds.return1y > 10)
+    const return1ymorethan10 = (funds) => funds.filter(funds => funds.return1y > 10)
     .map(funds => ({
         name : funds.name,
         return1y : funds.return1y
     }));
 
-    const NotHighRisk = funds.filter(funds => funds.risk !== "high")
-    .map(funds => funds.name)
+    const NotHighRisk =  (funds) => funds.filter(funds => funds.risk !== "high")
+    .map(funds => ({
+        name : funds.name,
+        return1y : funds.return1y
+    }));
 
-    const sortedfunds = return1ymorethan10.sort
+    const sortedfunds =(funds) => return1ymorethan10(funds).sort
     ((a,b) => a.return1y - b.return1y);
 
-    const sortedByName = return1ymorethan10.sort(
+    
+    const sortedByName = (funds) => return1ymorethan10(funds).sort(
         (a,b) => a.name.localeCompare(b.name)
     );
+
+    const SortedByReturn = (funds) => equityfunds(funds).sort(
+        (a,b) => b.return1y - a.return1y);
+
+        function processFunds(fundArray, callbackFunction){
+           return callbackFunction(fundArray);
+        }
+        console.log(
+          processFunds(funds,sortedByName));
     
-  console.log(sortedByName);
