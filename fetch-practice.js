@@ -16,7 +16,7 @@ async function getcleanFunds() {
            (a,b) => a.name.localeCompare(b.name)
     );
         
-    const top5Funds = sortedDirectFundByName.slice(0,8);
+    const top5Funds = sortedDirectFundByName.slice(0,5);
         console.table(top5Funds);
     }
 
