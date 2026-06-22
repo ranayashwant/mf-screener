@@ -1,4 +1,4 @@
-const calculatePnL = (units, purchaseNav, currentNav) => {
+export const calculatePnL = (units, purchaseNav, currentNav) => {
     const investedAmount = units * purchaseNav;
     const currentValue = units * currentNav;
     const gain = currentValue - investedAmount;
