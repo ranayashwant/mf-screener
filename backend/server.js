@@ -63,12 +63,24 @@ app.get('/api/funds', async (req, res) =>{
 );
 
 app.get('/api/funds/:schemeCode',async (req, res) => {    //second route to search by fund code in url
+  try{
   const code = req.params.schemeCode;
 
   const response = await fetch('https://api.mfapi.in/mf/' + code); 
   const data = await response.json();
 
+  if (data.data.length === 0) {
+      res.status(404).json({ 
+        error: 'Fund not found or invalid scheme code' });
+    }
+
+  
   res.json(data);
+
+}
+catch(error){
+  res.status(500).json({error : error.message});
+  }
 } );
 
 // this starts the server
