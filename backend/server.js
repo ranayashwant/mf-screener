@@ -71,7 +71,7 @@ app.get('/api/funds/:schemeCode',async (req, res) => {    //second route to sear
   const data = await response.json();
 
   if (data.data.length === 0) {
-      res.status(404).json({ 
+      return res.status(404).json({ 
         error: 'Fund not found or invalid scheme code' });
     }
 
@@ -93,6 +93,39 @@ app.get('/api/portfolio', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+app.post('/api/portfolio', async (req, res) => {
+  try {
+    const { scheme_code, units, purchase_nav, purchase_date } = req.body;  //user send data in body extraction
+    const sql = 
+        `
+      INSERT INTO portfolio_holdings (user_id, scheme_code, units, purchase_nav, purchase_date)
+      VALUES (1, ?, ?, ?, ?)
+    `;
+    await pool.execute(sql, [scheme_code, units, purchase_nav, purchase_date]);
+    res.status(201).json({ message: 'Holding added successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/api/portfolio/:id', async (req, res) => {
+  try{
+      const holdingId = req.params.id;
+      const sql = 'DELETE FROM portfolio_holdings WHERE id = ? AND user_id = 1';
+      const [result] = await pool.execute(sql, [holdingId]);
+
+      if (result.affectedRows === 0) {
+          return res.status(404).json({ error: 'Holding not found' });
+      }
+
+      res.json({ message: 'Holding deleted successfully' });
+  }
+  catch(error){
+      res.status(500).json({ error: error.message });
+  }
+});
+
 
 // this starts the server
 app.listen(PORT, () => {
