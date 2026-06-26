@@ -1,8 +1,14 @@
 import express from 'express';
+import cors from 'cors';
 import pool from './src/db/connection.js';
+
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors());
+app.use(express.json());
+
 
 // this is called "Middleware" - it allows your server to read JSON data
 app.use(express.json());
