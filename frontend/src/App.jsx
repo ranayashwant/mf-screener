@@ -2,18 +2,22 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Screener from './pages/Screener.jsx';
 import Portfolio from './pages/Portfolio.jsx';
+import SipPlanner from './pages/SipPlanner.jsx';
 
 function App() {
   return (
     <BrowserRouter>
       {/* NAVIGATION BAR */}
       <nav className="bg-blue-700 p-4 shadow-md">
-        <div className="max-w-6xl mx-auto flex gap-6">
+        <div className="max-w-6xl mx-auto flex gap-10">
           <Link to="/" className="text-white font-semibold hover:text-blue-200">
-            Screener
+            Screener 
           </Link>
           <Link to="/portfolio" className="text-white font-semibold hover:text-blue-200">
-            Portfolio
+            Portfolio 
+          </Link>
+          <Link to="/sip-planner" className="text-white font-semibold hover:text-blue-200">
+            SIP Planner 
           </Link>
         </div>
       </nav>
