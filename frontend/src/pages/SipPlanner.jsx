@@ -1,4 +1,4 @@
-import {userState} from 'react';
+import { useState } from 'react';
 
 function SipPlanner() {
     const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ function SipPlanner() {
         });
     };
 
-    const calculateSip = (e) => {
+    const calculateSIP = (e) => {
         e.preventDefault();
 
         const monthlyInvestment = parseFloat(formData.amount);
@@ -26,7 +26,7 @@ function SipPlanner() {
         // Calculation
 
         const monthlyRate = (annualReturnRate / 12) / 100;
-        corpus = monthlyInvestment * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate);
+        const corpus = monthlyInvestment * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) * (1 + monthlyRate);
         const totalInvestment = monthlyInvestment * totalMonths;
         const totalEarnings = corpus - totalInvestment;
 

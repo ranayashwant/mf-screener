@@ -1,5 +1,5 @@
 // frontend/src/App.jsx
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Screener from './pages/Screener.jsx';
 import Portfolio from './pages/Portfolio.jsx';
 import SipPlanner from './pages/SipPlanner.jsx';
@@ -24,11 +24,11 @@ function App() {
 
       {/* PAGES CONTAINER */}
       <Routes>
-        {/* When URL is exactly "/Screener", show <Screener /> */}
         <Route path="/" element={<Screener />} />
-        
-        {/* When URL is "/Portfolio", show <Portfolio /> */}
+        <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/Portfolio" element={<Portfolio />} />
+        <Route path="/sip-planner" element={<SipPlanner />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
