@@ -11,27 +11,32 @@ function Screener() {
   useEffect(() => {
     async function fetchFunds() {
       try {
-        
-
-        
-
-        //backend is called for MFAPI data
         const response = await fetch('http://localhost:3000/api/funds');
         const data = await response.json();
-         setAllFunds(data); // Save the big list here
+
+        if (Array.isArray(data)) {
+          setAllFunds(data);
+        } else if (data && Array.isArray(data.data)) {
+          setAllFunds(data.data);
+        } else {
+          console.error('Unexpected funds response format:', data);
+          setAllFunds([]);
+        }
+
         setLoading(false);
       } catch (error) {
         console.error('Failed to fetch :', error);
+        setAllFunds([]);
         setLoading(false);
-        
       }
     }
     fetchFunds();
   }, []);    //empty array means run only once when component mounts
 
   //for filtering from the fetched funds according to search term
-  const filteredFunds = allFunds.filter(fund =>
-    fund.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const safeFunds = Array.isArray(allFunds) ? allFunds : [];
+  const filteredFunds = safeFunds.filter(fund =>
+    (fund?.name || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
     //if loading is true, show loading message
@@ -50,7 +55,7 @@ function Screener() {
         onChange={(e) => setSearchTerm(e.target.value)}
        />
 
-        <p className="text-sm text-gray-500 mb-4">Showing {filteredFunds.length} of {allFunds.length} funds</p>
+        <p className="text-sm text-gray-500 mb-4">Showing {filteredFunds.length} of {safeFunds.length} funds</p>
 
         {/*mapping acquired funds according to name and code */}
       <div className="grid gap-4">

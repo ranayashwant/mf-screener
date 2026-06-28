@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MF Screener — Complete Blueprint Mind Map</title>
+<!-- NOTE: This mind map structure was generated using AI to visualize the project architecture. -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --bg:#070b09;--bg2:#0d1410;--bg3:#131c17;--bg-hover:#1a2922;
+  --fg:#e4ece7;--fg2:#a3b5ab;--fg3:#5e7368;
+  --accent:#10b981;--accent2:#34d399;--accent-dim:rgba(16,185,129,.12);
+  --amber:#f59e0b;--red:#ef4444;--violet:#8b5cf6;--cyan:#06b6d4;
+  --pink:#ec4899;--orange:#f97316;--lime:#84cc16;--sky:#38bdf8;
+  --border:#162019;--line:#1c2e24;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 50%,rgba(16,185,129,.06)0%,transparent 55%),radial-gradient(ellipse at 85% 15%,rgba(245,158,11,.04)0%,transparent 50%),radial-gradient(ellipse at 50% 85%,rgba(6,182,212,.04)0%,transparent 50%);pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(16,185,129,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--fg3);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--fg2);}
+
+/* Header */
+.header{position:sticky;top:0;z-index:100;background:rgba(7,11,9,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:16px;height:64px;}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;white-space:nowrap;color:var(--accent2);}
+.logo i{font-size:22px;}
+.logo span{color:var(--fg3);font-weight:400;font-size:13px;margin-left:4px;}
+
+/* Tab Navigation */
+.tabs{display:flex;gap:2px;overflow-x:auto;flex:1;padding:4px 0;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{padding:8px 16px;border:none;background:transparent;color:var(--fg3);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;border-radius:8px;transition:all .2s;position:relative;}
+.tab-btn:hover{color:var(--fg2);background:var(--bg3);}
+.tab-btn.active{color:var(--accent2);background:var(--accent-dim);}
+.tab-btn .tab-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+
+/* Controls */
+.controls{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.ctrl-btn{width:36px;height:36px;border:1px solid var(--border);background:var(--bg2);color:var(--fg3);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.ctrl-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+
+/* Search */
+.search-wrap{position:relative;}
+.search-wrap input{width:200px;height:36px;padding:0 12px 0 32px;border:1px solid var(--border);background:var(--bg2);color:var(--fg);border-radius:8px;font-family:inherit;font-size:13px;outline:none;transition:all .2s;}
+.search-wrap input:focus{border-color:var(--accent);background:var(--bg3);width:260px;}
+.search-wrap input::placeholder{color:var(--fg3);}
+.search-wrap i{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--fg3);font-size:12px;}
+
+/* Main Content */
+.main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:24px;}
+
+/* Mind Map Container */
+.map-container{display:none;animation:fadeUp .35s ease;}
+.map-container.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* Root Node */
+.root-node{display:inline-flex;align-items:center;gap:14px;padding:20px 32px;background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1.5px solid var(--accent);border-radius:16px;margin-bottom:24px;box-shadow:0 0 40px rgba(16,185,129,.1),inset 0 1px 0 rgba(255,255,255,.03);}
+.root-node i{font-size:28px;color:var(--accent);}
+.root-node .root-label{font-size:22px;font-weight:700;letter-spacing:-.3px;}
+.root-node .root-sub{font-size:13px;color:var(--fg3);margin-top:2px;}
+
+/* Branches Container */
+.branches{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px;}
+@media(max-width:900px){.branches{grid-template-columns:1fr;}}
+
+/* Branch */
+.branch{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--bg2);transition:border-color .2s;}
+.branch:hover{border-color:color-mix(in srgb,var(--branch-color) 40%,transparent);}
+.branch-header{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;user-select:none;transition:background .15s;}
+.branch-header:hover{background:var(--bg-hover);}
+.branch-dot{width:10px;height:10px;border-radius:50%;background:var(--branch-color);flex-shrink:0;box-shadow:0 0 8px color-mix(in srgb,var(--branch-color) 40%,transparent);}
+.branch-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:color-mix(in srgb,var(--branch-color) 12%,transparent);color:var(--branch-color);}
+.branch-title{flex:1;font-weight:600;font-size:14px;}
+.branch-count{font-size:11px;color:var(--fg3);background:var(--bg);padding:2px 8px;border-radius:10px;}
+.branch-chevron{color:var(--fg3);font-size:11px;transition:transform .25s;}
+.branch.collapsed .branch-chevron{transform:rotate(-90deg);}
+.branch-body{padding:0 16px 16px;display:grid;gap:0;transition:all .25s;}
+.branch.collapsed .branch-body{display:none;}
+
+/* Tree Nodes */
+.tree-node{position:relative;}
+.tree-children{margin-left:16px;padding-left:16px;border-left:2px solid color-mix(in srgb,var(--branch-color) 25%,transparent);}
+.tree-item{padding:6px 0 6px 4px;display:flex;align-items:flex-start;gap:8px;cursor:default;transition:background .15s;border-radius:6px;margin:0 -4px;padding-right:4px;}
+.tree-item:hover{background:var(--bg-hover);}
+.tree-item.has-children{cursor:pointer;}
+.tree-item .toggle-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--fg3);flex-shrink:0;margin-top:2px;transition:transform .2s;}
+.tree-item.has-children.collapsed .toggle-icon{transform:rotate(-90deg);}
+.tree-item .node-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px;}
+.tree-item .node-label{font-size:13px;line-height:1.5;flex:1;}
+.tree-item .node-label strong{font-weight:600;color:var(--fg);}
+.tree-item .node-badge{font-size:10px;padding:1px 7px;border-radius:6px;font-weight:500;white-space:nowrap;margin-top:2px;}
+.tree-item .node-badge.green{background:rgba(16,185,129,.15);color:#34d399;}
+.tree-item .node-badge.amber{background:rgba(245,158,11,.15);color:#fbbf24;}
+.tree-item .node-badge.red{background:rgba(239,68,68,.15);color:#f87171;}
+.tree-item .node-badge.blue{background:rgba(56,189,248,.15);color:#38bdf8;}
+.tree-item .node-badge.violet{background:rgba(139,92,246,.15);color:#a78bfa;}
+.tree-item .node-children{margin-left:14px;padding-left:14px;border-left:2px solid color-mix(in srgb,var(--branch-color) 18%,transparent);overflow:hidden;transition:max-height .3s ease,opacity .2s;}
+.tree-item.collapsed .node-children{max-height:0!important;opacity:0;}
+
+/* Code Block */
+.code-block{margin:6px 0 2px 26px;padding:12px 16px;background:#0a0e0c;border:1px solid var(--border);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.7;color:var(--fg2);overflow-x:auto;white-space:pre;}
+.code-block .kw{color:#c084fc;}
+.code-block .fn{color:#38bdf8;}
+.code-block .str{color:#34d399;}
+.code-block .num{color:#fbbf24;}
+.code-block .cm{color:#4a6356;font-style:italic;}
+.code-block .op{color:#f87171;}
+
+/* Status Checkbox (Roadmap) */
+.status-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--fg3);flex-shrink:0;margin-top:3px;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .15s;}
+.status-check.done{background:var(--accent);border-color:var(--accent);color:#fff;}
+.status-check.pending{border-color:var(--fg3);color:transparent;}
+
+/* Schema Table */
+.schema-table{margin:4px 0 4px 26px;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:12px;width:calc(100% - 26px);}
+.schema-table table{width:100%;border-collapse:collapse;}
+.schema-table th{text-align:left;padding:8px 12px;background:var(--bg3);color:var(--fg3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+.schema-table td{padding:7px 12px;border-bottom:1px solid var(--border);color:var(--fg2);}
+.schema-table tr:last-child td{border-bottom:none;}
+.schema-table .col-name{color:var(--accent2);font-family:'JetBrains Mono',monospace;font-size:11.5px;}
+.schema-table .col-type{color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:11px;}
+.schema-table .col-constraint{font-size:10px;}
+.schema-table .pk{color:#f87171;}
+.schema-table .fk{color:#38bdf8;}
+.schema-table .uq{color:#a78bfa;}
+.schema-table .df{color:var(--fg3);}
+
+/* Endpoint Block */
+.endpoint{margin:4px 0 4px 26px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;}
+.endpoint-method{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-right:8px;}
+.endpoint-method.get{background:rgba(16,185,129,.15);color:#34d399;}
+.endpoint-method.post{background:rgba(245,158,11,.15);color:#fbbf24;}
+.endpoint-method.delete{background:rgba(239,68,68,.15);color:#f87171;}
+.endpoint-path{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg);}
+.endpoint-desc{font-size:12px;color:var(--fg3);margin-top:4px;}
+.endpoint-params{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;}
+.endpoint-params span{font-size:10px;padding:2px 8px;border-radius:4px;background:var(--bg3);color:var(--fg2);font-family:'JetBrains Mono',monospace;}
+
+/* File Tree */
+.file-tree{margin:4px 0 4px 26px;}
+.file-item{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:4px;font-size:12.5px;font-family:'JetBrains Mono',monospace;color:var(--fg2);}
+.file-item:hover{background:var(--bg-hover);}
+.file-item i{width:16px;text-align:center;font-size:12px;}
+.file-item .fi-folder{color:var(--amber);}
+.file-item .fi-file{color:var(--fg3);}
+.file-item .fi-js{color:#fbbf24;}
+.file-item .fi-html{color:#f87171;}
+.file-item .fi-css{color:#38bdf8;}
+.file-item .fi-env{color:var(--fg3);}
+.file-item .fi-git{color:#f87171;}
+.file-item .fi-json{color:#34d399;}
+.file-item .fi-sql{color:#c084fc;}
+.file-indent{padding-left:24px;}
+
+/* Stats Bar */
+.stats-bar{display:flex;gap:16px;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:24px;flex-wrap:wrap;}
+.stat-item{display:flex;align-items:center;gap:8px;}
+.stat-num{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.stat-label{font-size:12px;color:var(--fg3);}
+.stat-divider{width:1px;background:var(--border);margin:0 4px;}
+
+/* Highlight matched */
+.search-match{background:rgba(245,158,11,.25);border-radius:2px;padding:0 1px;}
+.search-hidden{display:none!important;}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:var(--fg3);}
+.empty-state i{font-size:40px;margin-bottom:12px;opacity:.3;}
+.empty-state p{font-size:14px;}
+
+/* Floating particles */
+.particle{position:fixed;width:2px;height:2px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:0;opacity:0;animation:particleFloat linear infinite;}
+@keyframes particleFloat{0%{opacity:0;transform:translateY(100vh);}10%{opacity:.4;}90%{opacity:.4;}100%{opacity:0;transform:translateY(-20px);}}
+
+/* Tooltip */
+[data-tip]{position:relative;}
+[data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);padding:4px 10px;background:#1a2922;border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--fg2);white-space:nowrap;z-index:200;pointer-events:none;animation:fadeUp .15s ease;}
+
+/* Print */
+@media print{.header{position:relative;}.particle{display:none;}}
+</style>
+</head>
+<body>
+
+<!-- Floating Particles -->
+<div id="particles"></div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <i class="fa-solid fa-diagram-project"></i>
+      MF Screener
+      <span>Blueprint</span>
+    </div>
+    <nav class="tabs" id="tabNav"></nav>
+    <div class="controls">
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search nodes..." autocomplete="off">
+      </div>
+      <button class="ctrl-btn" id="expandAll" data-tip="Expand All" title="Expand All"><i class="fa-solid fa-expand"></i></button>
+      <button class="ctrl-btn" id="collapseAll" data-tip="Collapse All" title="Collapse All"><i class="fa-solid fa-compress"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="main" id="mainContent"></main>
+
+<script>
+// ─── Branch Color Palette ───
+const COLORS = ['#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899','#f97316','#84cc16','#38bdf8','#a78bfa'];
+
+// ─── Mind Map Data ───
+const MIND_MAPS = {
+
+// ═══════════════════════════════════════════
+// VIEW 1: PROJECT BLUEPRINT
+// ═══════════════════════════════════════════
+blueprint: {
+  root: { icon:'fa-solid fa-sitemap', label:'MF Screener', sub:'Complete Project Blueprint' },
+  stats: [
+    { num:'4', label:'Pages' }, { num:'5', label:'API Routes' }, { num:'3', label:'DB Tables' },
+    { num:'6', label:'Weeks' }, { num:'1', label:'External API' }, { num:'3', label:'Core Calculations' }
+  ],
+  branches: [
+    {
+      label:'Project Goal', icon:'fa-solid fa-bullseye', color:COLORS[0],
+      children:[
+        { label:'<strong>Screen</strong> mutual funds with filters & sorting', icon:'fa-solid fa-filter' },
+        { label:'<strong>Track</strong> portfolio holdings with live P&L', icon:'fa-solid fa-chart-line' },
+        { label:'<strong>Plan</strong> SIP investments with instalment cap', icon:'fa-solid fa-calendar-check' },
+        { label:'<strong>Calculate</strong> lumpsum/SIP allocations across funds', icon:'fa-solid fa-calculator' }
+      ]
+    },
+    {
+      label:'Target Audience', icon:'fa-solid fa-users', color:COLORS[1],
+      children:[
+        { label:'<strong>Retail investors</strong> in Indian market', icon:'fa-solid fa-indian-rupee-sign' },
+        { label:'People who want <strong>all-in-one</strong> MF tool', icon:'fa-solid fa-layer-group' },
+        { label:'Investors frustrated by <strong>no SIP cap</strong> on existing platforms', icon:'fa-solid fa-ban' }
+      ]
+    },
+    {
+      label:'Unique Value Prop', icon:'fa-solid fa-star', color:COLORS[2],
+      children:[
+        { label:'<strong>SIP Instalment Count Cap</strong> — standout feature', icon:'fa-solid fa-crown', badge:{ text:'INTERVIEW HIGHLIGHT', cls:'amber' } },
+        { label:'Built from <strong>real AMFI distributor experience</strong> (ARN holder)', icon:'fa-solid fa-certificate' },
+        { label:'Single tool replacing <strong>multiple platforms</strong>', icon:'fa-solid fa-arrows-rotate' },
+        { label:'Zerodha Coin, Groww etc. <strong>don\'t offer</strong> SIP cap feature', icon:'fa-solid fa-xmark' }
+      ]
+    },
+    {
+      label:'Tech Stack', icon:'fa-solid fa-layer-group', color:COLORS[3],
+      children:[
+        { label:'Frontend: <strong>React (Vite) + Tailwind CSS + Recharts</strong>', icon:'fa-brands fa-react' },
+        { label:'Backend: <strong>Node.js + Express.js</strong>', icon:'fa-brands fa-node-js' },
+        { label:'Database: <strong>MySQL</strong> (via mysql2)', icon:'fa-solid fa-database' },
+        { label:'Data: <strong>MFAPI.in</strong> (free, no auth)', icon:'fa-solid fa-cloud-arrow-down' },
+        { label:'Deploy: <strong>Vercel</strong> (FE) + <strong>Railway</strong> (BE+DB)', icon:'fa-solid fa-rocket' }
+      ]
+    },
+    {
+      label:'Timeline & Scope', icon:'fa-solid fa-clock', color:COLORS[4],
+      children:[
+        { label:'<strong>6 weeks</strong> build timeline', icon:'fa-solid fa-hourglass-half' },
+        { label:'Parallel learning: JS → Node → MySQL → React (<strong>10-12 weeks</strong>)', icon:'fa-solid fa-graduation-cap' },
+        { label:'Desktop-first, <strong>mobile later</strong>', icon:'fa-solid fa-desktop' }
+      ]
+    },
+    {
+      label:'Deliberately Excluded (v1)', icon:'fa-solid fa-circle-xmark', color:COLORS[5],
+      children:[
+        { label:'User authentication (using <strong>user_id=1</strong>)', icon:'fa-solid fa-lock-open' },
+        { label:'Fund comparison page', icon:'fa-solid fa-code-compare' },
+        { label:'XIRR calculation (too complex)', icon:'fa-solid fa-calculator' },
+        { label:'STP calculator', icon:'fa-solid fa-arrow-right-arrow-left' },
+        { label:'Mobile responsiveness', icon:'fa-solid fa-mobile-screen' }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 2: FOLDER & FILE STRUCTURE
+// ═══════════════════════════════════════════
+folders: {
+  root: { icon:'fa-solid fa-folder-tree', label:'Project Structure', sub:'Complete Folder & File Map' },
+  stats: [
+    { num:'2', label:'Root Folders' }, { num:'5', label:'Backend Folders' }, { num:'4', label:'Frontend Folders' },
+    { num:'8+', label:'Backend Files' }, { num:'6+', label:'Frontend Files' }
+  ],
+  branches: [
+    {
+      label:'mf-screener/ (Backend)', icon:'fa-solid fa-server', color:COLORS[0],
+      type:'files',
+      files:[
+        { name:'server.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'Express app entry point' },
+        { name:'package.json', icon:'fa-solid fa-cube', cls:'fi-json', desc:'Dependencies & scripts' },
+        { name:'.env', icon:'fa-solid fa-gear', cls:'fi-env', desc:'Environment variables' },
+        { name:'.gitignore', icon:'fa-brands fa-git-alt', cls:'fi-git', desc:'Git ignore rules' },
+        { name:'src/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+          { name:'routes/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'fundRoutes.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'GET /api/funds, GET /api/funds/:code' },
+            { name:'portfolioRoutes.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'GET/POST/DELETE /api/portfolio' },
+            { name:'sipRoutes.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'POST /api/sip/calculate' }
+          ]},
+          { name:'controllers/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'fundController.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'Request/response handlers for funds' },
+            { name:'portfolioController.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'Request/response handlers for portfolio' }
+          ]},
+          { name:'services/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'fundService.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'MFAPI fetch + parse logic' },
+            { name:'calcService.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'CAGR, SIP, P&L calculations' }
+          ]},
+          { name:'db/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'connection.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'MySQL connection pool' },
+            { name:'queries.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'Reusable query helpers' },
+            { name:'schema.sql', icon:'fa-solid fa-database', cls:'fi-sql', desc:'Table creation scripts' },
+            { name:'seed.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'Fetch & seed funds from MFAPI' }
+          ]},
+          { name:'utils/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'helpers.js', icon:'fa-brands fa-node-js', cls:'fi-js', desc:'Misc utility functions' }
+          ]}
+        ]}
+      ]
+    },
+    {
+      label:'mf-screener-client/ (Frontend)', icon:'fa-solid fa-display', color:COLORS[1],
+      type:'files',
+      files:[
+        { name:'index.html', icon:'fa-solid fa-code', cls:'fi-html', desc:'HTML entry point' },
+        { name:'vite.config.js', icon:'fa-solid fa-gear', cls:'fi-js', desc:'Vite configuration + proxy' },
+        { name:'package.json', icon:'fa-solid fa-cube', cls:'fi-json', desc:'Frontend dependencies' },
+        { name:'src/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+          { name:'pages/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'ScreenerPage.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Fund screener with filters + table' },
+            { name:'PortfolioPage.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Holdings tracker + P&L' },
+            { name:'SIPPlannerPage.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'SIP calculator with cap' },
+            { name:'CalculatorPage.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Lumpsum/SIP/Hybrid allocator' }
+          ]},
+          { name:'components/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'Navbar.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Navigation bar' },
+            { name:'FilterSidebar.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Screener filter panel' },
+            { name:'FundTable.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Sortable fund data table' },
+            { name:'NavChart.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Recharts NAV history line chart' },
+            { name:'HoldingCard.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Single holding display' },
+            { name:'SummaryCards.jsx', icon:'fa-brands fa-react', cls:'fi-js', desc:'Portfolio summary stats' }
+          ]},
+          { name:'services/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'api.js', icon:'fa-brands fa-react', cls:'fi-js', desc:'Axios/fetch wrappers for all API calls' }
+          ]},
+          { name:'utils/', icon:'fa-solid fa-folder', cls:'fi-folder', children:[
+            { name:'calculations.js', icon:'fa-brands fa-react', cls:'fi-js', desc:'Frontend math (P&L, allocation splits)' }
+          ]}
+        ]}
+      ]
+    },
+    {
+      label:'Environment Variables', icon:'fa-solid fa-key', color:COLORS[5],
+      type:'files',
+      files:[
+        { name:'PORT=5000', icon:'fa-solid fa-hashtag', cls:'fi-env' },
+        { name:'DB_HOST=localhost', icon:'fa-solid fa-server', cls:'fi-env' },
+        { name:'DB_USER=root', icon:'fa-solid fa-user', cls:'fi-env' },
+        { name:'DB_PASSWORD=yourpassword', icon:'fa-solid fa-lock', cls:'fi-env' },
+        { name:'DB_NAME=mf_screener', icon:'fa-solid fa-database', cls:'fi-env' },
+        { name:'MFAPI_BASE_URL=https://api.mfapi.in', icon:'fa-solid fa-link', cls:'fi-env' }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 3: SYSTEM DESIGN
+// ═══════════════════════════════════════════
+system: {
+  root: { icon:'fa-solid fa-network-wired', label:'System Architecture', sub:'Data Flow & Component Design' },
+  stats: [
+    { num:'4', label:'Tiers' }, { num:'3', label:'External Calls' }, { num:'5', label:'API Endpoints' },
+    { num:'2', label:'Data Sources' }
+  ],
+  branches: [
+    {
+      label:'Presentation Layer', icon:'fa-solid fa-display', color:COLORS[6],
+      children:[
+        { label:'<strong>React SPA</strong> served by Vite', icon:'fa-brands fa-react' },
+        { label:'<strong>React Router</strong> — client-side routing (/ , /portfolio, /sip, /calculator)', icon:'fa-solid fa-route' },
+        { label:'<strong>Recharts</strong> — NAV line chart, SIP area chart', icon:'fa-solid fa-chart-area' },
+        { label:'<strong>Tailwind CSS</strong> — utility-first styling', icon:'fa-solid fa-paintbrush' },
+        { label:'<strong>API Service Layer</strong> — fetch wrappers in src/services/', icon:'fa-solid fa-plug' },
+        { label:'<strong>State: local React state</strong> (no Redux/Zustand needed for v1)', icon:'fa-solid fa-cube' }
+      ]
+    },
+    {
+      label:'Application Layer', icon:'fa-solid fa-server', color:COLORS[0],
+      children:[
+        { label:'<strong>Express.js</strong> HTTP server on PORT 5000', icon:'fa-brands fa-node-js' },
+        { label:'<strong>Routes</strong> → define URL paths + HTTP methods', icon:'fa-solid fa-signs-post' },
+        { label:'<strong>Controllers</strong> → extract params, call services, send response', icon:'fa-solid fa-gamepad' },
+        { label:'<strong>Services</strong> → business logic (CAGR, SIP math, MFAPI calls)', icon:'fa-solid fa-cogs' },
+        { label:'<strong>Middleware</strong> → CORS, JSON parsing, error handling', icon:'fa-solid fa-shield-halved' },
+        { label:'<strong>DB layer</strong> → mysql2 connection pool + query helpers', icon:'fa-solid fa-database' }
+      ]
+    },
+    {
+      label:'Data Layer', icon:'fa-solid fa-hard-drive', color:COLORS[3],
+      children:[
+        { label:'<strong>MySQL Database</strong> — 3 tables (funds, nav_history, portfolio_holdings)', icon:'fa-solid fa-database' },
+        { label:'<strong>Seed script</strong> — one-time fetch from MFAPI to populate funds table', icon:'fa-solid fa-seedling' },
+        { label:'<strong>NAV history</strong> — stored locally, updated periodically', icon:'fa-solid fa-clock-rotate-left' },
+        { label:'<strong>Portfolio data</strong> — user holdings, no auth (user_id=1)', icon:'fa-solid fa-briefcase' }
+      ]
+    },
+    {
+      label:'External Integration', icon:'fa-solid fa-cloud', color:COLORS[4],
+      children:[
+        { label:'<strong>MFAPI.in</strong> — free public API, no auth required', icon:'fa-solid fa-globe' },
+        { label:'GET /mf → <strong>all scheme codes + names</strong> (for seeding)', icon:'fa-solid fa-list' },
+        { label:'GET /mf/:code → <strong>fund detail + full NAV history</strong>', icon:'fa-solid fa-chart-line' },
+        { label:'GET /mf/:code/latest → <strong>latest NAV only</strong> (for live P&L)', icon:'fa-solid fa-bolt' },
+        { label:'<strong>Rate limiting consideration</strong> — cache responses, don\'t hammer API', icon:'fa-solid fa-gauge' }
+      ]
+    },
+    {
+      label:'Request Lifecycle', icon:'fa-solid fa-arrow-right-arrow-left', color:COLORS[1],
+      children:[
+        { label:'<strong>1.</strong> User clicks filter / submits form', icon:'fa-solid fa-hand-pointer' },
+        { label:'<strong>2.</strong> React component calls api.getFunds({category, sort})', icon:'fa-brands fa-react' },
+        { label:'<strong>3.</strong> Fetch request → Express route /api/funds', icon:'fa-solid fa-arrow-right' },
+        { label:'<strong>4.</strong> Controller extracts query params', icon:'fa-solid fa-magnifying-glass' },
+        { label:'<strong>5.</strong> Service builds SQL query with filters/sort', icon:'fa-solid fa-code' },
+        { label:'<strong>6.</strong> DB query → results returned', icon:'fa-solid fa-database' },
+        { label:'<strong>7.</strong> Controller sends JSON response', icon:'fa-solid fa-reply' },
+        { label:'<strong>8.</strong> React updates state → re-renders table', icon:'fa-solid fa-rotate' }
+      ]
+    },
+    {
+      label:'Deployment Architecture', icon:'fa-solid fa-rocket', color:COLORS[2],
+      children:[
+        { label:'<strong>Vercel</strong> — hosts React build (static files + SSR)', icon:'fa-solid fa-cloud-arrow-up' },
+        { label:'<strong>Railway</strong> — hosts Express server + MySQL database', icon:'fa-solid fa-train' },
+        { label:'<strong>CORS config</strong> — allow Vercel domain to call Railway API', icon:'fa-solid fa-shield-halved' },
+        { label:'<strong>Vite proxy</strong> — in dev, /api proxied to localhost:5000', icon:'fa-solid fa-arrows-turn-right' },
+        { label:'<strong>Environment vars</strong> — set separately on Vercel & Railway', icon:'fa-solid fa-key' }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 4: DATABASE SCHEMA
+// ═══════════════════════════════════════════
+database: {
+  root: { icon:'fa-solid fa-database', label:'Database Schema', sub:'MySQL Tables, Columns & Relationships' },
+  stats: [
+    { num:'3', label:'Tables' }, { num:'17', label:'Columns' }, { num:'2', label:'Foreign Keys' },
+    { num:'2', label:'Unique Constraints' }
+  ],
+  branches: [
+    {
+      label:'funds', icon:'fa-solid fa-table', color:COLORS[0],
+      type:'schema',
+      schema: {
+        cols:[
+          { name:'id', type:'INT', constraints:['PK','AUTO_INCREMENT'] },
+          { name:'scheme_code', type:'VARCHAR(20)', constraints:['UNIQUE','NOT NULL'] },
+          { name:'fund_name', type:'VARCHAR(255)', constraints:['NOT NULL'] },
+          { name:'amc', type:'VARCHAR(100)', constraints:[] },
+          { name:'category', type:'VARCHAR(50)', constraints:['— equity/debt/hybrid/elss'] },
+          { name:'risk', type:'VARCHAR(20)', constraints:['— low/moderate/high'] },
+          { name:'current_nav', type:'DECIMAL(10,4)', constraints:[] },
+          { name:'return_1y', type:'DECIMAL(5,2)', constraints:[] },
+          { name:'return_3y', type:'DECIMAL(5,2)', constraints:[] },
+          { name:'return_5y', type:'DECIMAL(5,2)', constraints:[] },
+          { name:'updated_at', type:'TIMESTAMP', constraints:['DEFAULT CURRENT_TIMESTAMP','ON UPDATE'] }
+        ]
+      },
+      children:[
+        { label:'<strong>Primary table</strong> — stores all fund metadata', icon:'fa-solid fa-star' },
+        { label:'<strong>scheme_code</strong> is the natural key from MFAPI', icon:'fa-solid fa-key' },
+        { label:'<strong>category</strong> derived from MFAPI scheme_category', icon:'fa-solid fa-tag' },
+        { label:'<strong>Return columns</strong> calculated via CAGR from NAV history', icon:'fa-solid fa-percent' },
+        { label:'Populated by <strong>seed.js</strong> script', icon:'fa-solid fa-seedling' }
+      ]
+    },
+    {
+      label:'nav_history', icon:'fa-solid fa-table', color:COLORS[4],
+      type:'schema',
+      schema: {
+        cols:[
+          { name:'id', type:'INT', constraints:['PK','AUTO_INCREMENT'] },
+          { name:'scheme_code', type:'VARCHAR(20)', constraints:['FK → funds','NOT NULL'] },
+          { name:'nav_date', type:'DATE', constraints:['NOT NULL'] },
+          { name:'nav', type:'DECIMAL(10,4)', constraints:['NOT NULL'] }
+        ],
+        unique: 'UNIQUE(scheme_code, nav_date)'
+      },
+      children:[
+        { label:'<strong>Time-series data</strong> — daily NAV per fund', icon:'fa-solid fa-chart-line' },
+        { label:'<strong>Unique constraint</strong> prevents duplicate NAV entries', icon:'fa-solid fa-fingerprint' },
+        { label:'<strong>FK to funds</strong> — cascade on delete', icon:'fa-solid fa-link' },
+        { label:'Used for <strong>NAV history charts</strong> and <strong>CAGR calculation</strong>', icon:'fa-solid fa-chart-area' },
+        { label:'Data fetched from <strong>MFAPI /mf/:code</strong> endpoint', icon:'fa-solid fa-cloud-arrow-down' }
+      ]
+    },
+    {
+      label:'portfolio_holdings', icon:'fa-solid fa-table', color:COLORS[1],
+      type:'schema',
+      schema: {
+        cols:[
+          { name:'id', type:'INT', constraints:['PK','AUTO_INCREMENT'] },
+          { name:'user_id', type:'INT', constraints:['DEFAULT 1'] },
+          { name:'scheme_code', type:'VARCHAR(20)', constraints:['FK → funds','NOT NULL'] },
+          { name:'units', type:'DECIMAL(10,4)', constraints:['NOT NULL'] },
+          { name:'purchase_nav', type:'DECIMAL(10,4)', constraints:['NOT NULL'] },
+          { name:'purchase_date', type:'DATE', constraints:['NOT NULL'] },
+          { name:'created_at', type:'TIMESTAMP', constraints:['DEFAULT CURRENT_TIMESTAMP'] }
+        ]
+      },
+      children:[
+        { label:'<strong>user_id=1</strong> hardcoded — no auth in v1', icon:'fa-solid fa-lock-open' },
+        { label:'<strong>P&L calculation</strong>: (current_nav - purchase_nav) × units', icon:'fa-solid fa-calculator' },
+        { label:'<strong>Current NAV</strong> fetched live from MFAPI or funds table', icon:'fa-solid fa-bolt' },
+        { label:'Supports <strong>multiple holdings</strong> of same fund (different purchase dates)', icon:'fa-solid fa-layer-group' }
+      ]
+    },
+    {
+      label:'Relationships', icon:'fa-solid fa-diagram-project', color:COLORS[3],
+      children:[
+        { label:'<strong>funds</strong> 1 ←→ N <strong>nav_history</strong> (one fund has many NAV entries)', icon:'fa-solid fa-arrow-right' },
+        { label:'<strong>funds</strong> 1 ←→ N <strong>portfolio_holdings</strong> (one fund can be held multiple times)', icon:'fa-solid fa-arrow-right' },
+        { label:'<strong>nav_history</strong> has <strong>composite unique key</strong> (scheme_code + nav_date)', icon:'fa-solid fa-fingerprint' },
+        { label:'All FKs reference <strong>scheme_code</strong> (not id) — matches MFAPI identifier', icon:'fa-solid fa-key' }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 5: API ROUTES
+// ═══════════════════════════════════════════
+api: {
+  root: { icon:'fa-solid fa-plug', label:'API Routes', sub:'Backend Endpoints & Contracts' },
+  stats: [
+    { num:'5', label:'Endpoints' }, { num:'3', label:'Methods' }, { num:'2', label:'Resource Groups' },
+    { num:'6', label:'Query Params' }
+  ],
+  branches: [
+    {
+      label:'Funds Endpoints', icon:'fa-solid fa-coins', color:COLORS[0],
+      children:[
+        {
+          label:'', type:'endpoint', method:'GET', path:'/api/funds',
+          desc:'List all funds with optional filtering and sorting',
+          params:['category','amc','risk','sort','limit','offset'],
+          children:[
+            { label:'<strong>category</strong> — equity | debt | hybrid | elss', icon:'fa-solid fa-tag' },
+            { label:'<strong>amc</strong> — fund house name filter', icon:'fa-solid fa-building' },
+            { label:'<strong>risk</strong> — low | moderate | high', icon:'fa-solid fa-gauge-high' },
+            { label:'<strong>sort</strong> — return_1y | return_3y | return_5y', icon:'fa-solid fa-sort' },
+            { label:'<strong>limit/offset</strong> — pagination', icon:'fa-solid fa-ellipsis' },
+            { label:'Returns: <strong>array of fund objects</strong>', icon:'fa-solid fa-reply' }
+          ]
+        },
+        {
+          label:'', type:'endpoint', method:'GET', path:'/api/funds/:schemeCode',
+          desc:'Single fund detail with full NAV history',
+          children:[
+            { label:'<strong>schemeCode</strong> — MFAPI scheme code (e.g., 100033)', icon:'fa-solid fa-hashtag' },
+            { label:'Returns: <strong>fund object + NAV history array</strong>', icon:'fa-solid fa-reply' },
+            { label:'Used by <strong>Fund Detail view</strong> for chart', icon:'fa-solid fa-chart-line' }
+          ]
+        }
+      ]
+    },
+    {
+      label:'Portfolio Endpoints', icon:'fa-solid fa-briefcase', color:COLORS[1],
+      children:[
+        {
+          label:'', type:'endpoint', method:'GET', path:'/api/portfolio',
+          desc:'Get all holdings for user_id=1 with live P&L',
+          children:[
+            { label:'Fetches holdings from <strong>portfolio_holdings</strong> table', icon:'fa-solid fa-database' },
+            { label:'Enriches each with <strong>current NAV</strong> from funds table or MFAPI', icon:'fa-solid fa-bolt' },
+            { label:'Calculates <strong>invested amount, current value, gain/loss</strong>', icon:'fa-solid fa-calculator' },
+            { label:'Returns: <strong>holdings array + summary totals</strong>', icon:'fa-solid fa-reply' }
+          ]
+        },
+        {
+          label:'', type:'endpoint', method:'POST', path:'/api/portfolio',
+          desc:'Add a new holding',
+          children:[
+            { label:'Body: <strong>{ scheme_code, units, purchase_nav, purchase_date }</strong>', icon:'fa-solid fa-pen-to-square' },
+            { label:'Validates scheme_code exists in funds table', icon:'fa-solid fa-check-circle' },
+            { label:'Inserts into portfolio_holdings with user_id=1', icon:'fa-solid fa-plus' },
+            { label:'Returns: <strong>created holding object</strong>', icon:'fa-solid fa-reply' }
+          ]
+        },
+        {
+          label:'', type:'endpoint', method:'DELETE', path:'/api/portfolio/:id',
+          desc:'Remove a holding by ID',
+          children:[
+            { label:'<strong>:id</strong> — portfolio_holdings primary key', icon:'fa-solid fa-hashtag' },
+            { label:'Deletes only if user_id=1 (safety check)', icon:'fa-solid fa-shield-halved' },
+            { label:'Returns: <strong>{ success: true }</strong>', icon:'fa-solid fa-reply' }
+          ]
+        }
+      ]
+    },
+    {
+      label:'SIP Endpoint (Optional)', icon:'fa-solid fa-calendar-check', color:COLORS[2],
+      children:[
+        {
+          label:'', type:'endpoint', method:'POST', path:'/api/sip/calculate',
+          desc:'Calculate SIP projection with instalment cap',
+          children:[
+            { label:'Body: <strong>{ amount, months, schemeCode, assumedReturnRate }</strong>', icon:'fa-solid fa-pen-to-square' },
+            { label:'Returns: <strong>{ totalInvested, projectedCorpus, endDate, schedule[] }</strong>', icon:'fa-solid fa-reply' },
+            { label:'<strong>Note:</strong> Can also be pure frontend calculation — no DB needed', icon:'fa-solid fa-circle-info', badge:{ text:'OPTIONAL', cls:'violet' } }
+          ]
+        }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 6: PAGES MAP
+// ═══════════════════════════════════════════
+pages: {
+  root: { icon:'fa-solid fa-window-maximize', label:'Frontend Pages', sub:'Features, Components & API Calls per Page' },
+  stats: [
+    { num:'4', label:'Pages' }, { num:'12+', label:'Components' }, { num:'5', label:'API Calls' },
+    { num:'2', label:'Charts' }
+  ],
+  branches: [
+    {
+      label:'Fund Screener (/)', icon:'fa-solid fa-magnifying-glass-dollar', color:COLORS[0],
+      children:[
+        { label:'<strong>Filter Sidebar</strong> component', icon:'fa-solid fa-sliders',
+          children:[
+            { label:'Category dropdown: equity / debt / hybrid / ELSS', icon:'fa-solid fa-tag' },
+            { label:'AMC dropdown: populated from available AMCs', icon:'fa-solid fa-building' },
+            { label:'Risk level: low / moderate / high', icon:'fa-solid fa-gauge-high' }
+          ]
+        },
+        { label:'<strong>Fund Table</strong> component', icon:'fa-solid fa-table',
+          children:[
+            { label:'Columns: fund name, category, AMC, 1Y/3Y/5Y returns, risk', icon:'fa-solid fa-columns' },
+            { label:'<strong>Sortable columns</strong> — click header to sort', icon:'fa-solid fa-sort' },
+            { label:'Click row → opens <strong>Fund Detail view</strong>', icon:'fa-solid fa-arrow-right' }
+          ]
+        },
+        { label:'<strong>NavChart</strong> component (Recharts LineChart)', icon:'fa-solid fa-chart-line',
+          children:[
+            { label:'X-axis: date, Y-axis: NAV value', icon:'fa-solid fa-arrows-left-right' },
+            { label:'Data from <strong>GET /api/funds/:schemeCode</strong>', icon:'fa-solid fa-plug' }
+          ]
+        },
+        { label:'API: <strong>GET /api/funds?category=equity&sort=return_1y</strong>', icon:'fa-solid fa-plug', badge:{ text:'PRIMARY API', cls:'green' } }
+      ]
+    },
+    {
+      label:'Portfolio Tracker (/portfolio)', icon:'fa-solid fa-briefcase', color:COLORS[1],
+      children:[
+        { label:'<strong>Summary Cards</strong> component', icon:'fa-solid fa-rectangle-list',
+          children:[
+            { label:'Total Invested amount', icon:'fa-solid fa-indian-rupee-sign' },
+            { label:'Current Value (live)', icon:'fa-solid fa-bolt' },
+            { label:'Total P&L (₹ and %)', icon:'fa-solid fa-chart-line' }
+          ]
+        },
+        { label:'<strong>Add Holding Form</strong>', icon:'fa-solid fa-circle-plus',
+          children:[
+            { label:'Select fund (searchable dropdown from funds list)', icon:'fa-solid fa-search' },
+            { label:'Input: units purchased, purchase NAV, purchase date', icon:'fa-solid fa-keyboard' },
+            { label:'Calls <strong>POST /api/portfolio</strong>', icon:'fa-solid fa-plug' }
+          ]
+        },
+        { label:'<strong>Holdings Table</strong> component', icon:'fa-solid fa-table',
+          children:[
+            { label:'Fund name, units, purchase value, current value, gain/loss', icon:'fa-solid fa-columns' },
+            { label:'Delete button per row → <strong>DELETE /api/portfolio/:id</strong>', icon:'fa-solid fa-trash' },
+            { label:'Current value = units × live NAV from MFAPI', icon:'fa-solid fa-calculator' }
+          ]
+        },
+        { label:'API: <strong>GET /api/portfolio</strong>', icon:'fa-solid fa-plug', badge:{ text:'PRIMARY API', cls:'green' } },
+        { label:'Note: <strong>user_id=1</strong> hardcoded, no login', icon:'fa-solid fa-lock-open', badge:{ text:'v1 LIMITATION', cls:'amber' } }
+      ]
+    },
+    {
+      label:'SIP Planner (/sip)', icon:'fa-solid fa-calendar-check', color:COLORS[2],
+      children:[
+        { label:'<strong>Input Form</strong>', icon:'fa-solid fa-pen-to-square',
+          children:[
+            { label:'Fund selection (searchable)', icon:'fa-solid fa-search' },
+            { label:'Monthly SIP amount (₹)', icon:'fa-solid fa-indian-rupee-sign' },
+            { label:'Start date', icon:'fa-solid fa-calendar' },
+            { label:'<strong>Number of instalments (CAP)</strong> — the key differentiator', icon:'fa-solid fa-crown', badge:{ text:'STANDOUT', cls:'amber' } },
+            { label:'Assumed return rate (default 12%)', icon:'fa-solid fa-percent' }
+          ]
+        },
+        { label:'<strong>Output Section</strong>', icon:'fa-solid fa-square-poll-vertical',
+          children:[
+            { label:'End date (calculated from start + months)', icon:'fa-solid fa-calendar-xmark' },
+            { label:'Total amount invested', icon:'fa-solid fa-coins' },
+            { label:'Projected corpus (future value of annuity)', icon:'fa-solid fa-gem' },
+            { label:'Instalment schedule table', icon:'fa-solid fa-list-ol' }
+          ]
+        },
+        { label:'<strong>Projection Chart</strong> (Recharts AreaChart)', icon:'fa-solid fa-chart-area',
+          children:[
+            { label:'X-axis: month number, Y-axis: cumulative value', icon:'fa-solid fa-arrows-left-right' },
+            { label:'Two lines: invested amount (linear) vs projected value (curved)', icon:'fa-solid fa-chart-line' }
+          ]
+        },
+        { label:'Can be <strong>pure frontend calculation</strong> — no backend needed', icon:'fa-solid fa-circle-info', badge:{ text:'NO DB NEEDED', cls:'violet' } }
+      ]
+    },
+    {
+      label:'Investment Calculator (/calculator)', icon:'fa-solid fa-calculator', color:COLORS[3],
+      children:[
+        { label:'<strong>Amount Input</strong> — total amount to deploy', icon:'fa-solid fa-indian-rupee-sign' },
+        { label:'<strong>Investment Type Toggle</strong>', icon:'fa-solid fa-toggle-on',
+          children:[
+            { label:'Lumpsum — one-time investment', icon:'fa-solid fa-money-bill' },
+            { label:'SIP — monthly instalments over time', icon:'fa-solid fa-calendar-days' },
+            { label:'Hybrid — part lumpsum + part SIP', icon:'fa-solid fa-arrows-split-up-and-left' }
+          ]
+        },
+        { label:'<strong>Fund Allocation</strong>', icon:'fa-solid fa-chart-pie',
+          children:[
+            { label:'Add multiple funds with % allocation', icon:'fa-solid fa-plus' },
+            { label:'<strong>Must total 100%</strong> — validation', icon:'fa-solid fa-check-circle' },
+            { label:'NAV fetched from existing /api/funds data', icon:'fa-solid fa-plug' }
+          ]
+        },
+        { label:'<strong>Output</strong> (per fund)', icon:'fa-solid fa-square-poll-vertical',
+          children:[
+            { label:'Lumpsum: ₹ amount per fund + units at current NAV', icon:'fa-solid fa-money-bill' },
+            { label:'SIP: monthly instalment per fund + total per fund', icon:'fa-solid fa-calendar-days' },
+            { label:'Hybrid: both sections combined', icon:'fa-solid fa-arrows-split-up-and-left' }
+          ]
+        },
+        { label:'<strong>100% frontend math</strong> — no backend route', icon:'fa-solid fa-laptop-code', badge:{ text:'CLIENT-SIDE ONLY', cls:'blue' } }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 7: BUSINESS LOGIC
+// ═══════════════════════════════════════════
+logic: {
+  root: { icon:'fa-solid fa-gears', label:'Business Logic', sub:'Core Calculations & Algorithms' },
+  stats: [
+    { num:'3', label:'Core Functions' }, { num:'1', label:'Integration', cls:'violet' }
+  ],
+  branches: [
+    {
+      label:'CAGR Calculation', icon:'fa-solid fa-chart-line', color:COLORS[0],
+      children:[
+        { label:'<strong>Purpose:</strong> Calculate annualized returns from NAV history', icon:'fa-solid fa-bullseye' },
+        { label:'<strong>Inputs:</strong> startNav, endNav, years', icon:'fa-solid fa-right-to-bracket' },
+        { label:'<strong>Output:</strong> CAGR as percentage', icon:'fa-solid fa-right-from-bracket' },
+        { label:'<strong>Used in:</strong> Seeding return_1y, return_3y, return_5y columns', icon:'fa-solid fa-database' },
+        { label:'<strong>Formula:</strong> ((endNav/startNav)^(1/years) - 1) × 100', icon:'fa-solid fa-superscript' },
+        {
+          label:'', type:'code', code:
+`<span class="kw">function</span> <span class="fn">calculateCAGR</span>(startNav, endNav, years) {
+  <span class="kw">return</span> (
+    (Math.<span class="fn">pow</span>(endNav / startNav, <span class="num">1</span> / years)) - <span class="num">1</span>
+  ) * <span class="num">100</span>;
+}`
+        }
+      ]
+    },
+    {
+      label:'SIP Future Value', icon:'fa-solid fa-chart-area', color:COLORS[1],
+      children:[
+        { label:'<strong>Purpose:</strong> Project SIP corpus with instalment cap', icon:'fa-solid fa-bullseye' },
+        { label:'<strong>Inputs:</strong> amount (monthly), months, assumedReturnRate', icon:'fa-solid fa-right-to-bracket' },
+        { label:'<strong>Outputs:</strong> totalInvested, projectedCorpus, endDate', icon:'fa-solid fa-right-from-bracket' },
+        { label:'<strong>Formula:</strong> Future Value of Annuity Due', icon:'fa-solid fa-superscript' },
+        { label:'<strong>Key differentiator:</strong> months = capped instalment count', icon:'fa-solid fa-crown', badge:{ text:'UNIQUE FEATURE', cls:'amber' } },
+        {
+          label:'', type:'code', code:
+`<span class="kw">function</span> <span class="fn">calculateSIP</span>({ amount, months, assumedReturnRate }) {
+  <span class="kw">const</span> monthlyRate = assumedReturnRate / <span class="num">12</span> / <span class="num">100</span>;
+  <span class="kw">const</span> corpus = amount * (
+    (Math.<span class="fn">pow</span>(<span class="num">1</span> + monthlyRate, months) - <span class="num">1</span>)
+    / monthlyRate
+  ) * (<span class="num">1</span> + monthlyRate);
+  <span class="kw">const</span> endDate = <span class="kw">new</span> <span class="fn">Date</span>();
+  endDate.<span class="fn">setMonth</span>(endDate.<span class="fn">getMonth</span>() + months);
+  <span class="kw">return</span> {
+    totalInvested: amount * months,
+    projectedCorpus: corpus,
+    numberOfInstalments: months,
+    endDate: endDate.<span class="fn">toDateString</span>()
+  };
+}`
+        }
+      ]
+    },
+    {
+      label:'P&L Calculation', icon:'fa-solid fa-indian-rupee-sign', color:COLORS[2],
+      children:[
+        { label:'<strong>Purpose:</strong> Calculate gain/loss on each holding', icon:'fa-solid fa-bullseye' },
+        { label:'<strong>Inputs:</strong> units, purchaseNav, currentNav', icon:'fa-solid fa-right-to-bracket' },
+        { label:'<strong>Outputs:</strong> investedAmount, currentValue, gain, gainPercent', icon:'fa-solid fa-right-from-bracket' },
+        { label:'<strong>Used in:</strong> Portfolio page — per holding + summary', icon:'fa-solid fa-briefcase' },
+        { label:'<strong>currentNav</strong> fetched live from MFAPI or funds table', icon:'fa-solid fa-bolt' },
+        {
+          label:'', type:'code', code:
+`<span class="kw">function</span> <span class="fn">calculatePnL</span>({ units, purchaseNav, currentNav }) {
+  <span class="kw">const</span> investedAmount = units * purchaseNav;
+  <span class="kw">const</span> currentValue = units * currentNav;
+  <span class="kw">const</span> gain = currentValue - investedAmount;
+  <span class="kw">const</span> gainPercent = (gain / investedAmount) * <span class="num">100</span>;
+  <span class="kw">return</span> { investedAmount, currentValue, gain, gainPercent };
+}`
+        }
+      ]
+    },
+    {
+      label:'Live NAV Integration', icon:'fa-solid fa-bolt', color:COLORS[4],
+      children:[
+        { label:'<strong>Current value = units × live NAV</strong>', icon:'fa-solid fa-equals' },
+        { label:'NAV source: MFAPI <strong>GET /mf/:code/latest</strong>', icon:'fa-solid fa-cloud-arrow-down' },
+        { label:'Or use <strong>funds.current_nav</strong> if recently updated', icon:'fa-solid fa-database' },
+        { label:'<strong>Consider caching</strong> — don\'t call MFAPI for every page load', icon:'fa-solid fa-gauge' },
+        { label:'Update <strong>funds.current_nav</strong> periodically via cron or on-demand', icon:'fa-solid fa-clock-rotate-left' }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 8: EXTERNAL API
+// ═══════════════════════════════════════════
+external: {
+  root: { icon:'fa-solid fa-globe', label:'MFAPI.in', sub:'External Data Source Integration' },
+  stats: [
+    { num:'3', label:'Endpoints' }, { num:'0', label:'Auth Required' }, { num:'Free', label:'Cost', cls:'green' }
+  ],
+  branches: [
+    {
+      label:'GET /mf', icon:'fa-solid fa-list', color:COLORS[0],
+      children:[
+        { label:'<strong>Purpose:</strong> Get list of all mutual fund schemes', icon:'fa-solid fa-bullseye' },
+        { label:'<strong>Used for:</strong> Seeding the funds table', icon:'fa-solid fa-seedling' },
+        {
+          label:'', type:'code', code:
+`<span class="cm">// Response shape</span>
+[
+  {
+    <span class="str">"schemeCode"</span>: <span class="num">100033</span>,
+    <span class="str">"schemeName"</span>: <span class="str">"Aditya Birla Sun Life..."</span>
+  },
+  <span class="cm">// ... 10,000+ schemes</span>
+]`
+        },
+        { label:'<strong>Challenge:</strong> Very large response, need to parse & filter', icon:'fa-solid fa-triangle-exclamation', badge:{ text:'HANDLE WITH CARE', cls:'red' } },
+        { label:'Extract <strong>fund name, AMC, category</strong> from schemeName string', icon:'fa-solid fa-scissors' }
+      ]
+    },
+    {
+      label:'GET /mf/:schemeCode', icon:'fa-solid fa-chart-line', color:COLORS[1],
+      children:[
+        { label:'<strong>Purpose:</strong> Fund detail + full NAV history', icon:'fa-solid fa-bullseye' },
+        { label:'<strong>Used for:</strong> NAV history chart + CAGR calculation', icon:'fa-solid fa-chart-area' },
+        {
+          label:'', type:'code', code:
+`<span class="cm">// Response shape</span>
+{
+  <span class="str">"meta"</span>: {
+    <span class="str">"scheme_name"</span>: <span class="str">"..."</span>,
+    <span class="str">"fund_house"</span>: <span class="str">"..."</span>,
+    <span class="str">"scheme_category"</span>: <span class="str">"..."</span>,
+    <span class="str">"scheme_type"</span>: <span class="str">"..."</span>
+  },
+  <span class="str">"data"</span>: [
+    { <span class="str">"date"</span>: <span class="str">"21-06-2024"</span>, <span class="str">"nav"</span>: <span class="str">"134.5678"</span> },
+    <span class="cm">// ... daily NAV entries</span>
+  ]
+}`
+        },
+        { label:'<strong>meta</strong> provides fund house & category', icon:'fa-solid fa-tags' },
+        { label:'<strong>data</strong> is reverse chronological (newest first)', icon:'fa-solid fa-arrow-up' },
+        { label:'NAV values are <strong>strings</strong> — need parseFloat()', icon:'fa-solid fa-triangle-exclamation' },
+        { label:'Date format: <strong>DD-MM-YYYY</strong> — need parsing', icon:'fa-solid fa-calendar' }
+      ]
+    },
+    {
+      label:'GET /mf/:schemeCode/latest', icon:'fa-solid fa-bolt', color:COLORS[4],
+      children:[
+        { label:'<strong>Purpose:</strong> Get only the latest NAV value', icon:'fa-solid fa-bullseye' },
+        { label:'<strong>Used for:</strong> Live P&L calculation in portfolio', icon:'fa-solid fa-indian-rupee-sign' },
+        { label:'Lightweight response — <strong>preferred for frequent calls</strong>', icon:'fa-solid fa-feather' },
+        { label:'Consider <strong>caching</strong> with TTL (e.g., 15 min)', icon:'fa-solid fa-clock' }
+      ]
+    },
+    {
+      label:'Integration Notes', icon:'fa-solid fa-circle-info', color:COLORS[5],
+      children:[
+        { label:'<strong>No authentication</strong> required — completely free', icon:'fa-solid fa-lock-open', badge:{ text:'FREE', cls:'green' } },
+        { label:'<strong>No rate limit</strong> documented — but be respectful', icon:'fa-solid fa-gauge' },
+        { label:'<strong>String parsing needed</strong> — all values come as strings', icon:'fa-solid fa-code' },
+        { label:'<strong>Date format is Indian</strong> — DD-MM-YYYY, not ISO', icon:'fa-solid fa-calendar-day' },
+        { label:'<strong>Seed script strategy:</strong> fetch all schemes once, filter relevant ones, store in DB', icon:'fa-solid fa-seedling' },
+        { label:'<strong>Error handling:</strong> API may be slow/down, add timeouts & fallbacks', icon:'fa-solid fa-shield-halved' }
+      ]
+    }
+  ]
+},
+
+// ═══════════════════════════════════════════
+// VIEW 9: BUILD ROADMAP
+// ═══════════════════════════════════════════
+roadmap: {
+  root: { icon:'fa-solid fa-road', label:'Build Roadmap', sub:'6-Week Development Timeline' },
+  stats: [
+    { num:'1/13', label:'Tasks Done' }, { num:'12', label:'Remaining' }, { num:'4', label:'Phases' },
+    { num:'6', label:'Weeks' }
+  ],
+  branches: [
+    {
+      label:'Phase 1: Foundation (Week 1-2)', icon:'fa-solid fa-shovel', color:COLORS[0],
+      children:[
+        { label:'Project initialized (Node/Express running)', icon:'', status:'done' },
+        { label:'Create folder structure (backend + frontend)', icon:'', status:'pending' },
+        { label:'MFAPI integration (fetch + parse fund list)', icon:'', status:'pending' },
+        { label:'MySQL schema creation (3 tables)', icon:'', status:'pending' },
+        { label:'Seed script (populate funds from MFAPI)', icon:'', status:'pending' },
+        { label:'DB connection pool + query helpers', icon:'', status:'pending' }
+      ]
+    },
+    {
+      label:'Phase 2: Backend APIs (Week 2-3)', icon:'fa-solid fa-server', color:COLORS[1],
+      children:[
+        { label:'GET /api/funds — list with filter/sort/pagination', icon:'', status:'pending' },
+        { label:'GET /api/funds/:schemeCode — detail + NAV history', icon:'', status:'pending' },
+        { label:'GET /api/portfolio — holdings with live P&L', icon:'', status:'pending' },
+        { label:'POST /api/portfolio — add holding', icon:'', status:'pending' },
+        { label:'DELETE /api/portfolio/:id — remove holding', icon:'', status:'pending' },
+        { label:'POST /api/sip/calculate — SIP projection (optional)', icon:'', status:'pending' }
+      ]
+    },
+    {
+      label:'Phase 3: Frontend (Week 3-5)', icon:'fa-solid fa-display', color:COLORS[3],
+      children:[
+        { label:'React setup with Vite + Tailwind + Router', icon:'', status:'pending' },
+        { label:'Navbar + layout components', icon:'', status:'pending' },
+        { label:'Screener page — filter sidebar + fund table', icon:'', status:'pending' },
+        { label:'Screener page — fund detail + NAV chart', icon:'', status:'pending' },
+        { label:'Portfolio page — summary cards + holdings table', icon:'', status:'pending' },
+        { label:'Portfolio page — add holding form', icon:'', status:'pending' },
+        { label:'SIP Planner page — form + output + chart', icon:'', status:'pending' },
+        { label:'Investment Calculator page — full logic', icon:'', status:'pending' }
+      ]
+    },
+    {
+      label:'Phase 4: Deploy (Week 5-6)', icon:'fa-solid fa-rocket', color:COLORS[2],
+      children:[
+        { label:'Deploy frontend to Vercel', icon:'', status:'pending' },
+        { label:'Deploy backend + MySQL to Railway', icon:'', status:'pending' },
+        { label:'Configure CORS for production domains', icon:'', status:'pending' },
+        { label:'Set environment variables on both platforms', icon:'', status:'pending' },
+        { label:'End-to-end testing on production URLs', icon:'', status:'pending' },
+        { label:'Bug fixes & final polish', icon:'', status:'pending' }
+      ]
+    }
+  ]
+}
+
+};
+
+// ─── Tab Definitions ───
+const TABS = [
+  { id:'blueprint', label:'Blueprint', icon:'fa-solid fa-sitemap', dot:COLORS[0] },
+  { id:'folders', label:'Folders', icon:'fa-solid fa-folder-tree', dot:COLORS[1] },
+  { id:'system', label:'System Design', icon:'fa-solid fa-network-wired', dot:COLORS[3] },
+  { id:'database', label:'Database', icon:'fa-solid fa-database', dot:COLORS[4] },
+  { id:'api', label:'API Routes', icon:'fa-solid fa-plug', dot:COLORS[2] },
+  { id:'pages', label:'Pages', icon:'fa-solid fa-window-maximize', dot:COLORS[5] },
+  { id:'logic', label:'Business Logic', icon:'fa-solid fa-gears', dot:COLORS[6] },
+  { id:'external', label:'External API', icon:'fa-solid fa-globe', dot:COLORS[4] },
+  { id:'roadmap', label:'Roadmap', icon:'fa-solid fa-road', dot:COLORS[1] }
+];
+
+// ─── State ───
+let activeTab = 'blueprint';
+let searchTerm = '';
+
+// ─── Render Tabs ───
+function renderTabs() {
+  const nav = document.getElementById('tabNav');
+  nav.innerHTML = TABS.map(t =>
+    `<button class="tab-btn${t.id===activeTab?' active':''}" data-tab="${t.id}">
+      <span class="tab-dot" style="background:${t.dot}"></span>${t.label}
+    </button>`
+  ).join('');
+  nav.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTab = btn.dataset.tab;
+      searchTerm = '';
+      document.getElementById('searchInput').value = '';
+      renderTabs();
+      renderContent();
+    });
+  });
+}
+
+// ─── Render Content ───
+function renderContent() {
+  const main = document.getElementById('mainContent');
+  const data = MIND_MAPS[activeTab];
+  if (!data) return;
+
+  let html = `<div class="map-container active">`;
+
+  // Root Node
+  html += `<div class="root-node">
+    <i class="${data.root.icon}"></i>
+    <div>
+      <div class="root-label">${data.root.label}</div>
+      <div class="root-sub">${data.root.sub}</div>
+    </div>
+  </div>`;
+
+  // Stats Bar
+  if (data.stats && data.stats.length) {
+    html += `<div class="stats-bar">`;
+    data.stats.forEach((s, i) => {
+      if (i > 0) html += `<div class="stat-divider"></div>`;
+      const cls = s.cls || '';
+      const color = cls === 'green' ? 'var(--accent)' : cls === 'amber' ? 'var(--amber)' : cls === 'violet' ? 'var(--violet)' : 'var(--fg)';
+      html += `<div class="stat-item">
+        <span class="stat-num" style="color:${color}">${s.num}</span>
+        <span class="stat-label">${s.label}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Branches
+  html += `<div class="branches">`;
+  data.branches.forEach((branch, bi) => {
+    const color = branch.color || COLORS[bi % COLORS.length];
+    const childCount = countDescendants(branch);
+    html += `<div class="branch" style="--branch-color:${color}" data-branch="${bi}">`;
+    html += `<div class="branch-header" onclick="toggleBranch(this)">
+      <div class="branch-dot"></div>
+      <div class="branch-icon"><i class="${branch.icon}"></i></div>
+      <span class="branch-title">${branch.label}</span>
+      <span class="branch-count">${childCount}</span>
+      <i class="fa-solid fa-chevron-down branch-chevron"></i>
+    </div>`;
+    html += `<div class="branch-body">`;
+
+    // Handle different branch types
+    if (branch.type === 'files') {
+      html += renderFileTree(branch.files, color);
+    } else if (branch.type === 'schema' && branch.schema) {
+      html += renderSchemaTable(branch.schema, color);
+      html += renderTreeChildren(branch.children || [], color);
+    } else {
+      html += renderTreeChildren(branch.children || [], color);
+    }
+
+    html += `</div></div>`;
+  });
+  html += `</div></div>`;
+  main.innerHTML = html;
+
+  // Apply search
+  if (searchTerm) applySearch(searchTerm);
+}
+
+// ─── Count descendants ───
+function countDescendants(node) {
+  if (node.type === 'files') return countFiles(node.files);
+  let count = 0;
+  const children = node.children || [];
+  children.forEach(c => {
+    count++;
+    if (c.children) count += countDescendants(c);
+  });
+  return count;
+}
+function countFiles(files) {
+  let c = 0;
+  files.forEach(f => { c++; if (f.children) c += countFiles(f.children); });
+  return c;
+}
+
+// ─── Render Tree Children ───
+function renderTreeChildren(children, color) {
+  if (!children || !children.length) return '';
+  let html = `<div class="tree-children" style="--branch-color:${color}">`;
+  children.forEach(child => {
+    if (child.type === 'code') {
+      html += `<div class="tree-node"><div class="code-block">${child.code}</div></div>`;
+    } else if (child.type === 'endpoint') {
+      html += renderEndpoint(child);
+    } else {
+      const hasChildren = child.children && child.children.length > 0;
+      const statusHtml = child.status ? `<div class="status-check ${child.status}"><i class="fa-solid fa-check"></i></div>` : '';
+      const iconHtml = child.icon ? `<div class="node-icon" style="color:${color}"><i class="${child.icon}"></i></div>` : '';
+      const badgeHtml = child.badge ? `<span class="node-badge ${child.badge.cls}">${child.badge.text}</span>` : '';
+      const toggleHtml = hasChildren ? `<div class="toggle-icon"><i class="fa-solid fa-chevron-down"></i></div>` : '';
+
+      html += `<div class="tree-node">
+        <div class="tree-item${hasChildren?' has-children':''}" data-label="${(child.label||'').replace(/<[^>]*>/g,'')}" onclick="${hasChildren?'toggleTreeNode(this)':''}">
+          ${statusHtml}${toggleHtml}${iconHtml}
+          <span class="node-label">${child.label}</span>
+          ${badgeHtml}
+        </div>`;
+      if (hasChildren) {
+        html += `<div class="node-children" style="--branch-color:${color}">`;
+        html += renderTreeChildren(child.children, color);
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+  });
+  html += `</div>`;
+  return html;
+}
+
+// ─── Render File Tree ───
+function renderFileTree(files, color) {
+  let html = `<div class="file-tree">`;
+  files.forEach(f => {
+    const isFolder = !!f.children;
+    const iconCls = isFolder ? 'fi-folder' : (f.cls || 'fi-file');
+    const desc = f.desc ? ` <span style="color:var(--fg3);font-family:'Space Grotesk',sans-serif;font-size:11px;">— ${f.desc}</span>` : '';
+    html += `<div class="file-item" data-label="${f.name}"><i class="${f.icon} ${iconCls}"></i><span>${f.name}</span>${desc}</div>`;
+    if (f.children) {
+      html += `<div class="file-indent">${renderFileTree(f.children, color)}</div>`;
+    }
+  });
+  html += `</div>`;
+  return html;
+}
+
+// ─── Render Schema Table ───
+function renderSchemaTable(schema, color) {
+  let html = `<div class="schema-table"><table><thead><tr>
+    <th>Column</th><th>Type</th><th>Constraints</th>
+  </tr></thead><tbody>`;
+  schema.cols.forEach(col => {
+    const constraintsHtml = col.constraints.map(c => {
+      if (c === 'PK') return `<span class="pk">PK</span>`;
+      if (c.startsWith('FK')) return `<span class="fk">FK</span>`;
+      if (c === 'UNIQUE') return `<span class="uq">UQ</span>`;
+      if (c === 'AUTO_INCREMENT') return `<span class="df">AUTO_INC</span>`;
+      return `<span class="df">${c}</span>`;
+    }).join(' ');
+    html += `<tr>
+      <td class="col-name">${col.name}</td>
+      <td class="col-type">${col.type}</td>
+      <td class="col-constraint">${constraintsHtml}</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>`;
+  if (schema.unique) {
+    html += `<div style="margin:4px 0 4px 26px;font-size:11px;color:var(--fg3);font-family:'JetBrains Mono',monospace;">${schema.unique}</div>`;
+  }
+  return html;
+}
+
+// ─── Render Endpoint ───
+function renderEndpoint(child) {
+  const paramsHtml = child.params ? `<div class="endpoint-params">${child.params.map(p=>`<span>${p}</span>`).join('')}</div>` : '';
+  return `<div class="tree-node"><div class="endpoint" data-label="${child.path}">
+    <span class="endpoint-method ${child.method.toLowerCase()}">${child.method}</span>
+    <span class="endpoint-path">${child.path}</span>
+    <div class="endpoint-desc">${child.desc}</div>
+    ${paramsHtml}
+  </div></div>`;
+}
+
+// ─── Toggle Branch ───
+function toggleBranch(header) {
+  header.parentElement.classList.toggle('collapsed');
+}
+
+// ─── Toggle Tree Node ───
+function toggleTreeNode(item) {
+  item.classList.toggle('collapsed');
+  const children = item.nextElementSibling;
+  if (children && children.classList.contains('node-children')) {
+    if (item.classList.contains('collapsed')) {
+      children.style.maxHeight = '0';
+    } else {
+      children.style.maxHeight = children.scrollHeight + 'px';
+      setTimeout(() => { children.style.maxHeight = 'none'; }, 300);
+    }
+  }
+}
+
+// ─── Expand/Collapse All ───
+document.getElementById('expandAll').addEventListener('click', () => {
+  document.querySelectorAll('.branch.collapsed').forEach(b => b.classList.remove('collapsed'));
+  document.querySelectorAll('.tree-item.collapsed').forEach(t => {
+    t.classList.remove('collapsed');
+    const ch = t.nextElementSibling;
+    if (ch) ch.style.maxHeight = 'none';
+  });
+});
+document.getElementById('collapseAll').addEventListener('click', () => {
+  document.querySelectorAll('.branch').forEach(b => b.classList.add('collapsed'));
+  document.querySelectorAll('.tree-item.has-children').forEach(t => {
+    t.classList.add('collapsed');
+    const ch = t.nextElementSibling;
+    if (ch) ch.style.maxHeight = '0';
+  });
+});
+
+// ─── Search ───
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  searchTerm = e.target.value.trim().toLowerCase();
+  applySearch(searchTerm);
+});
+
+function applySearch(term) {
+  if (!term) {
+    // Remove all search-related classes
+    document.querySelectorAll('.search-hidden').forEach(el => el.classList.remove('search-hidden'));
+    document.querySelectorAll('.search-match').forEach(el => {
+      el.outerHTML = el.textContent;
+    });
+    return;
+  }
+
+  // First, restore all original text
+  document.querySelectorAll('.search-match').forEach(el => {
+    el.outerHTML = el.textContent;
+  });
+
+  // Search in all label-bearing elements
+  const items = document.querySelectorAll('[data-label]');
+  const branchHeaders = document.querySelectorAll('.branch-header');
+  const branches = document.querySelectorAll('.branch');
+
+  items.forEach(item => {
+    const text = (item.getAttribute('data-label') || '').toLowerCase();
+    if (text.includes(term)) {
+      item.classList.remove('search-hidden');
+      // Highlight match
+      const labelEl = item.querySelector('.node-label') || item;
+      if (labelEl && labelEl !== item) {
+        const original = labelEl.innerHTML;
+        const textOnly = item.getAttribute('data-label');
+        const regex = new RegExp(`(${escapeRegex(textOnly)})`, 'gi');
+        // Only highlight in the text node, preserve HTML
+        highlightInElement(labelEl, term);
+      }
+      // Expand parents
+      expandParents(item);
+    } else {
+      // Only hide if it's a leaf node with no visible children
+      const childItems = item.querySelectorAll('[data-label]');
+      let hasVisibleChild = false;
+      childItems.forEach(ci => {
+        if ((ci.getAttribute('data-label')||'').toLowerCase().includes(term)) hasVisibleChild = true;
+      });
+      if (!hasVisibleChild) {
+        item.closest('.tree-node')?.classList.add('search-hidden');
+      }
+    }
+  });
+
+  // Show/hide branches based on whether they have visible content
+  branches.forEach(branch => {
+    const hiddenNodes = branch.querySelectorAll('.tree-node.search-hidden');
+    const totalNodes = branch.querySelectorAll('.tree-node');
+    if (hiddenNodes.length === totalNodes.length && totalNodes.length > 0) {
+      branch.classList.add('search-hidden');
+    } else {
+      branch.classList.remove('search-hidden');
+      branch.classList.remove('collapsed'); // expand visible branches
+    }
+  });
+}
+
+function expandParents(el) {
+  let current = el.closest('.node-children');
+  while (current) {
+    current.style.maxHeight = 'none';
+    const sibling = current.previousElementSibling;
+    if (sibling) sibling.classList.remove('collapsed');
+    current = current.parentElement?.closest('.node-children');
+  }
+  // Also expand branch
+  const branch = el.closest('.branch');
+  if (branch) branch.classList.remove('collapsed');
+}
+
+function highlightInElement(el, term) {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+  textNodes.forEach(node => {
+    const idx = node.textContent.toLowerCase().indexOf(term);
+    if (idx >= 0) {
+      const span = document.createElement('span');
+      span.className = 'search-match';
+      const before = node.textContent.slice(0, idx);
+      const match = node.textContent.slice(idx, idx + term.length);
+      const after = node.textContent.slice(idx + term.length);
+      span.textContent = match;
+      const parent = node.parentNode;
+      if (before) parent.insertBefore(document.createTextNode(before), node);
+      parent.insertBefore(span, node);
+      if (after) parent.insertBefore(document.createTextNode(after), node);
+      parent.removeChild(node);
+    }
+  });
+}
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ─── Floating Particles ───
+function createParticles() {
+  const container = document.getElementById('particles');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (12 + Math.random() * 20) + 's';
+    p.style.animationDelay = (Math.random() * 15) + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+    container.appendChild(p);
+  }
+}
+
+// ─── Init ───
+renderTabs();
+renderContent();
+createParticles();
+</script>
+</body>
+</html>

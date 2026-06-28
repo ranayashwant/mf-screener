@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Screener from './pages/Screener.jsx';
 import Portfolio from './pages/Portfolio.jsx';
 import SipPlanner from './pages/SipPlanner.jsx';
+import Calculator from './pages/Calculator.jsx';
+import MindMapModal from './components/MindMapModal';
 
 function App() {
   return (
@@ -19,15 +21,18 @@ function App() {
           <Link to="/sip-planner" className="text-white font-semibold hover:text-blue-200">
             SIP Planner 
           </Link>
+          <Link to="/calculator" className="text-white font-semibold hover:text-blue-200">Calculator</Link> 
         </div>
       </nav>
+
+    <MindMapModal /> {/* project mind map */}
 
       {/* PAGES CONTAINER */}
       <Routes>
         <Route path="/" element={<Screener />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/Portfolio" element={<Portfolio />} />
         <Route path="/sip-planner" element={<SipPlanner />} />
+        <Route path="/calculator" element={<Calculator />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
