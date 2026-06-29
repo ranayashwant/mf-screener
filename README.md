@@ -36,7 +36,7 @@ Before writing a single line of code, the entire project was scoped out in an in
 | **Pages** | 4 |
 | **API Routes** | 5 |
 | **DB Tables** | 3 |
-| **Build Timeline** | 6 weeks |
+| **Build Timeline** | 9 weeks |
 | **External APIs** | 1 (MFAPI.in) |
 | **Core Calculations** | 3 |
  
