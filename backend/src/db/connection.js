@@ -18,6 +18,7 @@ try {
   conn.release();
 } catch(error) {
   console.error("❌ Database connection failed:", error.message);
+  console.error(error);
 }
 
 export default pool;
