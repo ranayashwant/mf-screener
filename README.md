@@ -24,6 +24,30 @@ This project is built to fix that — along with a clean screener and portfolio 
 
 ---
 
+## 🧠 Project Blueprint / Mind Map
+ 
+<p align="center">
+  <img src="docs/Project_Mind_Map.png" alt="Project Mind Map" width="800"/>
+</p>
+Before writing a single line of code, the entire project was scoped out in an interactive mind map covering goals, target audience, tech stack, timeline, and what to deliberately exclude from v1.
+ 
+| | |
+|---|---|
+| **Pages** | 4 |
+| **API Routes** | 5 |
+| **DB Tables** | 3 |
+| **Build Timeline** | 6 weeks |
+| **External APIs** | 1 (MFAPI.in) |
+| **Core Calculations** | 3 |
+ 
+**Target audience:** Retail investors in the Indian market who want an all-in-one MF tool, especially those frustrated by the lack of an instalment-count-based SIP cap on existing platforms.
+ 
+**Unique value proposition:** The SIP instalment-count cap — built directly from real AMFI distributor experience, and a feature that platforms like Zerodha Coin and Groww don't offer.
+ 
+🔗 *(Optional)* Link the full interactive mind map here once hosted, or note: "see `/public/mindmap.html`, open locally to explore"
+ 
+---
+
 ## ✨ What's Working in v1
 
 ### 🔍 Fund Screener
