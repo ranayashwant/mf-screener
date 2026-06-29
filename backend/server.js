@@ -8,7 +8,7 @@ import fundRoutes from './src/routes/fundRoutes.js';
 import portfolioRoutes from './src/routes/portfolioRoutes.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
