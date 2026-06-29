@@ -37,7 +37,7 @@ This project is built to fix that — along with a clean screener and portfolio 
 
 ### 📁 Portfolio Tracker
 <p align="center">
-  <img src="docs/portfolio.png" alt="Portfolio Tracker" width="700"/>
+  <img src="docs/portfolio_tracker.png" alt="Portfolio Tracker" width="700"/>
 </p>
 
 - Add holdings by scheme code, units, purchase NAV, folio number, and purchase date
@@ -45,7 +45,7 @@ This project is built to fix that — along with a clean screener and portfolio 
 
 ### 🗓️ SIP Planner *(Core Differentiator)*
 <p align="center">
-  <img src="docs/sip-planner.png" alt="SIP Planner" width="700"/>
+  <img src="docs/SIP-Planner.png" alt="SIP Planner" width="700"/>
 </p>
 
 - Input: monthly SIP amount, expected annual return %, and a **fixed number of instalments**
@@ -53,7 +53,7 @@ This project is built to fix that — along with a clean screener and portfolio 
 
 ### 🧮 Investment Calculator
 <p align="center">
-  <img src="docs/calculator.png" alt="Investment Calculator" width="700"/>
+  <img src="docs/Investment_calculator.png" alt="Investment Calculator" width="700"/>
 </p>
 
 - Deploy a lump sum across multiple funds by allocation %
