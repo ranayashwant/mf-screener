@@ -11,7 +11,7 @@ function Screener() {
   useEffect(() => {
     async function fetchFunds() {
       try {
-        const response = await fetch('http://localhost:3000/api/funds');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/funds`);
         const data = await response.json();
 
         if (Array.isArray(data)) {
