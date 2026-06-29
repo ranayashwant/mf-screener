@@ -27,7 +27,7 @@ This project is built to fix that — along with a clean screener and portfolio 
 ## 🧠 Project Blueprint / Mind Map
  
 <p align="center">
-  <img src="docs/mindmap.png" alt="Project Mind Map" width="800"/>
+  <img src="docs/Project_Mind_Map.png" alt="Project Mind Map" width="800"/>
 </p>
 Before writing a single line of code, the entire project was scoped out in an interactive mind map covering goals, target audience, tech stack, timeline, and what to deliberately exclude from v1.
  
