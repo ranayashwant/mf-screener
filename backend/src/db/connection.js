@@ -12,10 +12,15 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
+console.log("MYSQLHOST:", process.env.MYSQLHOST);
+console.log("MYSQLPORT:", process.env.MYSQLPORT);
+console.log("MYSQLUSER:", process.env.MYSQLUSER);
+console.log("MYSQLDATABASE:", process.env.MYSQLDATABASE);
+
 try {
   const conn = await pool.getConnection();
   console.log("✅ Connected to MySQL Database");
-  conn.release();
+  conn.release(); 
 } catch(error) {
   console.error("❌ Database connection failed:", error.message);
   console.error(error);
