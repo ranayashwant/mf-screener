@@ -28,6 +28,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Start server
-app.listen(PORT,'0.0.0.0', () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server is running on 0.0.0.0:${PORT}`);
+  console.log(`Server address: ${JSON.stringify(server.address())}`);
 });
