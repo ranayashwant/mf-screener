@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import { getApiUrl } from '../api';
 
 function Screener() {
   //state variables
@@ -11,7 +12,7 @@ function Screener() {
   useEffect(() => {
     async function fetchFunds() {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/funds`);
+        const response = await fetch(getApiUrl('/api/funds'));
         const data = await response.json();
 
         if (Array.isArray(data)) {

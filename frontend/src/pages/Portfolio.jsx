@@ -1,5 +1,6 @@
 // frontend/src/pages/Portfolio.jsx
 import { useState, useEffect } from 'react';
+import { getApiUrl } from '../api';
 
 function Portfolio() {    // state for the list of holdings
   const [holdings, setHoldings] = useState([]);
@@ -24,7 +25,7 @@ function Portfolio() {    // state for the list of holdings
         setHoldings([]);
         return;
       }
-      const navPromises = rawHoldings.map(async (holding) => fetch(`http://localhost:3000/api/funds/${holding.scheme_code}`)
+      const navPromises = rawHoldings.map(async (holding) => fetch(getApiUrl(`/api/funds/${holding.scheme_code}`))
         .then(res => res.json())
         .then(fundData => {
           if (!fundData.data || fundData.data.length === 0) {
@@ -53,7 +54,7 @@ function Portfolio() {    // state for the list of holdings
     
       catch (error) {
         console.error("Failed to calculate P&L (MFAPI might be down):", error);
-        const response = await fetch('http://localhost:3000/api/portfolio');
+        const response = await fetch(getApiUrl('/api/portfolio'));
         const rawHoldings = await response.json();
         setHoldings(rawHoldings);
       }
@@ -75,7 +76,7 @@ function Portfolio() {    // state for the list of holdings
     e.preventDefault(); // STOP the browser from refreshing the page (default HTML behavior)
 
     // Send POST request to backend
-    const response = await fetch('http://localhost:3000/api/portfolio', {
+    const response = await fetch(getApiUrl('/api/portfolio'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData) // Convert JS object to JSON string
@@ -86,7 +87,7 @@ function Portfolio() {    // state for the list of holdings
       setFormData({ scheme_code: '', units: '', purchase_nav: '', purchase_date: '' });
       
       // Re-fetch holdings to show the new one
-      const updatedData = await fetch('http://localhost:3000/api/portfolio');
+      const updatedData = await fetch(getApiUrl('/api/portfolio'));
       setHoldings(await updatedData.json());
     }
   };

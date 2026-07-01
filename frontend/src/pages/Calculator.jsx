@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { getApiUrl } from '../api';
 
 function Calculator() {
   const [investmentType, setInvestmentType] = useState('lumpsum');
@@ -58,7 +59,7 @@ function Calculator() {
     try {
       const navs = await Promise.all(
         validRows.map((row) =>
-          fetch(`http://localhost:3000/api/funds/${row.schemeCode}`)
+          fetch(getApiUrl(`/api/funds/${row.schemeCode}`))
             .then((res) => res.json())
             .then((fundData) => {
               if (!fundData.data || fundData.data.length === 0) return null;
