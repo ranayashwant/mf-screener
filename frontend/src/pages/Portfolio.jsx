@@ -14,52 +14,63 @@ function Portfolio() {    // state for the list of holdings
     Folio_Number: ''
   });
 
-  // Fetch existing holdings when page loads
+   // Fetch existing holdings when page loads
   useEffect(() => {
     async function fetchHoldingsWithPnL() {
       try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/portfolio`);
-      const rawHoldings = await response.json();
-
-      if(rawHoldings.length === 0 ) {
-        setHoldings([]);
-        return;
-      }
-      const navPromises = rawHoldings.map(holding => 
-  fetch(`${import.meta.env.VITE_API_URL}/api/funds/${holding.scheme_code}`)
-    .then(res => res.json())
-    .then(fundData => {
-      if (!fundData.data || fundData.data.length === 0) return null;
-      return parseFloat(fundData.data[0].nav);
-    })
-  );
-      const holdingsData = await Promise.all(navPromises);
-      const finalHoldings = holdingsData.map(h => {
-        const investedAmount = h.units * h.purchase_nav;
-        const currentValue = h.units * h.currentNav;
-        const gain = currentValue - investedAmount;
-        const gainPercent = (gain / investedAmount) * 100;
-        return {
-          ...h,
-          investedAmount: investedAmount.toFixed(2),
-          currentValue: currentValue.toFixed(2),
-          gain: gain.toFixed(2),
-          gainPercent: gainPercent.toFixed(2)
-        };
-      });
-      setHoldings(finalHoldings);
-    }
-    
-      catch (error) {
-        console.error("Failed to calculate P&L (MFAPI might be down):", error);
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/portfolio`);
         const rawHoldings = await response.json();
-        setHoldings(rawHoldings);
+
+        if (!Array.isArray(rawHoldings) || rawHoldings.length === 0) {
+          setHoldings([]);
+          return;
+        }
+
+        const navPromises = rawHoldings.map(holding => 
+          fetch(`${import.meta.env.VITE_API_URL}/api/funds/${holding.scheme_code}`)
+            .then(res => res.json())
+            .then(fundData => {
+              // If no data, just return the holding with currentNav = 0
+              if (!fundData.data || fundData.data.length === 0) {
+                return { ...holding, currentNav: 0 };
+              }
+              const currentNav = parseFloat(fundData.data[0].nav);
+              return { ...holding, currentNav: currentNav };
+            })
+            .catch(() => {
+              // If the network request fails completely, return holding with 0
+              return { ...holding, currentNav: 0 };
+            })
+        );
+
+        const holdingsWithNav = await Promise.all(navPromises);
+        
+        // Calculate P&L safely (currentNav is guaranteed to be a number now)
+        const finalHoldings = holdingsWithNav.map(h => {
+          const investedAmount = h.units * h.purchase_nav;
+          const currentValue = h.units * h.currentNav;
+          const gain = currentValue - investedAmount;
+          const gainPercent = investedAmount > 0 ? (gain / investedAmount) * 100 : 0;
+          
+          return {
+            ...h,
+            investedAmount: investedAmount.toFixed(2),
+            currentValue: currentValue.toFixed(2),
+            gain: gain.toFixed(2),
+            gainPercent: gainPercent.toFixed(2)
+          };
+        });
+        
+        setHoldings(finalHoldings);
+
+      } catch (error) {
+        console.error("Failed to fetch portfolio:", error);
+        setHoldings([]); // Just show empty table on total failure
       }
     }
     fetchHoldingsWithPnL();
-   }, []);
-
+  }, []);
+  
   // 3. Handle typing in the form
   const handleInputChange = (e) => {
     const { name, value } = e.target; // 'name' comes from the name="" attribute on the input
