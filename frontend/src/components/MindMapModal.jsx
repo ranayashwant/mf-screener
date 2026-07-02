@@ -3,7 +3,7 @@ function MindMapModal() {
   const openMindMap = () => {
     // In development, Vite serves 'public' files at the root
     // In production (Vercel), it does the same!
-    window.open('public/mindmap.html', '_blank', 'width=1200,height=800');
+    window.open('/mindmap.html', '_blank', 'width=1200,height=800');
   };
 
   return (
