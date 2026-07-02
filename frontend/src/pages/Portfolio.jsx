@@ -52,13 +52,13 @@ function Portfolio() {    // state for the list of holdings
     
       catch (error) {
         console.error("Failed to calculate P&L (MFAPI might be down):", error);
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/...`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/portfolio`);
         const rawHoldings = await response.json();
         setHoldings(rawHoldings);
       }
     }
     fetchHoldingsWithPnL();
-   []});
+   }, []);
 
   // 3. Handle typing in the form
   const handleInputChange = (e) => {
@@ -85,7 +85,7 @@ function Portfolio() {    // state for the list of holdings
       setFormData({ scheme_code: '', units: '', purchase_nav: '', purchase_date: '' });
       
       // Re-fetch holdings to show the new one
-      const updatedData = await fetch(`${import.meta.env.VITE_API_URL}/api/...`);
+      const updatedData = await fetch(`${import.meta.env.VITE_API_URL}/api/portfolio`);
       setHoldings(await updatedData.json());
     }
   };
