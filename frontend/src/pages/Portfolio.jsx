@@ -25,16 +25,14 @@ function Portfolio() {    // state for the list of holdings
         setHoldings([]);
         return;
       }
-      const navPromises = rawHoldings.map(async (holding) => fetch(getApiUrl(`/api/funds/${holding.scheme_code}`))
-        .then(res => res.json())
-        .then(fundData => {
-          if (!fundData.data || fundData.data.length === 0) {
-              return { ...holding, currentNav: null }; // null means "not found"
-            }
-          const currentNav = parseFloat(fundData.data[0].nav);
-          return {
-            ...holding, currentNav};
-      }));
+      const navPromises = rawHoldings.map(holding => 
+  fetch(`${import.meta.env.VITE_API_URL}/api/funds/${holding.schemeCode}`)
+    .then(res => res.json())
+    .then(fundData => {
+      if (!fundData.data || fundData.data.length === 0) return null;
+      return parseFloat(fundData.data[0].nav);
+    })
+);
       const holdingsData = await Promise.all(navPromises);
       const finalHoldings = holdingsData.map(h => {
         const investedAmount = h.units * h.purchase_nav;
@@ -54,7 +52,7 @@ function Portfolio() {    // state for the list of holdings
     
       catch (error) {
         console.error("Failed to calculate P&L (MFAPI might be down):", error);
-        const response = await fetch(getApiUrl('/api/portfolio'));
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/...`);
         const rawHoldings = await response.json();
         setHoldings(rawHoldings);
       }
@@ -76,7 +74,7 @@ function Portfolio() {    // state for the list of holdings
     e.preventDefault(); // STOP the browser from refreshing the page (default HTML behavior)
 
     // Send POST request to backend
-    const response = await fetch(getApiUrl('/api/portfolio'), {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/...`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData) // Convert JS object to JSON string
@@ -87,7 +85,7 @@ function Portfolio() {    // state for the list of holdings
       setFormData({ scheme_code: '', units: '', purchase_nav: '', purchase_date: '' });
       
       // Re-fetch holdings to show the new one
-      const updatedData = await fetch(getApiUrl('/api/portfolio'));
+      const updatedData = await fetch(`${import.meta.env.VITE_API_URL}/api/...`);
       setHoldings(await updatedData.json());
     }
   };
