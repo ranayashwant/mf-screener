@@ -18,7 +18,7 @@ function Portfolio() {    // state for the list of holdings
   useEffect(() => {
     async function fetchHoldingsWithPnL() {
       try {
-      const response = await fetch('http://localhost:3000/api/portfolio');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/portfolio`);
       const rawHoldings = await response.json();
 
       if(rawHoldings.length === 0 ) {
