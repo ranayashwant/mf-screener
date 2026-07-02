@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { getApiUrl } from '../api';
+//import { getApiUrl } from '../api';
 
 function Calculator() {
   const [investmentType, setInvestmentType] = useState('lumpsum');

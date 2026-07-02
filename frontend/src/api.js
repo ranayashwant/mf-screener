@@ -1,4 +1,4 @@
-const DEFAULT_BACKEND_URL = 'http://localhost:3000';
+/*const DEFAULT_BACKEND_URL = 'http://localhost:3000';
 
 export function getApiUrl(path = '/') {
   const configuredBaseUrl = import.meta.env.VITE_API_URL?.trim();
@@ -13,3 +13,4 @@ export function getApiUrl(path = '/') {
 
   return `${DEFAULT_BACKEND_URL}${path.startsWith('/') ? path : `/${path}`}`;
 }
+*/

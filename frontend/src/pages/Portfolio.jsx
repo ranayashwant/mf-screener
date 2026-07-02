@@ -1,6 +1,6 @@
 // frontend/src/pages/Portfolio.jsx
 import { useState, useEffect } from 'react';
-import { getApiUrl } from '../api';
+//import { getApiUrl } from '../api';
 
 function Portfolio() {    // state for the list of holdings
   const [holdings, setHoldings] = useState([]);

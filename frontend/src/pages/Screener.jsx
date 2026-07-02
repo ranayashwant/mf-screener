@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { getApiUrl } from '../api';
+//import { getApiUrl } from '../api';
 
 function Screener() {
   //state variables
