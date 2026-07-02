@@ -26,7 +26,7 @@ function Portfolio() {    // state for the list of holdings
         return;
       }
       const navPromises = rawHoldings.map(holding => 
-  fetch(`${import.meta.env.VITE_API_URL}/api/funds/${holding.schemeCode}`)
+  fetch(`${import.meta.env.VITE_API_URL}/api/funds/${holding.scheme_code}`)
     .then(res => res.json())
     .then(fundData => {
       if (!fundData.data || fundData.data.length === 0) return null;
@@ -74,7 +74,7 @@ function Portfolio() {    // state for the list of holdings
     e.preventDefault(); // STOP the browser from refreshing the page (default HTML behavior)
 
     // Send POST request to backend
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/...`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/portfolio`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData) // Convert JS object to JSON string
