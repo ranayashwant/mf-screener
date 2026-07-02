@@ -58,7 +58,7 @@ function Portfolio() {    // state for the list of holdings
       }
     }
     fetchHoldingsWithPnL();
-   []});
+   }, []);
 
   // 3. Handle typing in the form
   const handleInputChange = (e) => {
