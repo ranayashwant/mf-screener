@@ -10,6 +10,11 @@
   <img src="https://img.shields.io/badge/Data-11%2C461%20Live%20Funds-blue?style=for-the-badge" />
 </p>
 
+<p align="center">
+  <a href="https://mf-screener-three.vercel.app/"><b>🔗 Live Demo</b></a> ·
+  <a href="https://mf-screener-p8gd.onrender.com/api/health"><b>🔗 Backend API Health</b></a>
+</p>
+
 > A full-stack web app to screen mutual funds, plan SIPs, and track portfolios — built using **2+ years of real NISM-certified Mutual Fund Distributor experience** to solve gaps that exist in platforms like Zerodha Coin and Groww.
 
 ---
@@ -25,12 +30,13 @@ This project is built to fix that — along with a clean screener and portfolio 
 ---
 
 ## 🧠 Project Blueprint / Mind Map
- 
+
 <p align="center">
   <img src="docs/Project_Mind_Map.png" alt="Project Mind Map" width="800"/>
 </p>
+
 Before writing a single line of code, the entire project was scoped out in an interactive mind map covering goals, target audience, tech stack, timeline, and what to deliberately exclude from v1.
- 
+
 | | |
 |---|---|
 | **Pages** | 4 |
@@ -39,13 +45,11 @@ Before writing a single line of code, the entire project was scoped out in an in
 | **Build Timeline** | 6 weeks |
 | **External APIs** | 1 (MFAPI.in) |
 | **Core Calculations** | 3 |
- 
+
 **Target audience:** Retail investors in the Indian market who want an all-in-one MF tool, especially those frustrated by the lack of an instalment-count-based SIP cap on existing platforms.
- 
+
 **Unique value proposition:** The SIP instalment-count cap — built directly from real AMFI distributor experience, and a feature that platforms like Zerodha Coin and Groww don't offer.
- 
-🔗 *(Optional)* Link the full interactive mind map here once hosted, or note: "see `/public/mindmap.html`, open locally to explore"
- 
+
 ---
 
 ## ✨ What's Working in v1
@@ -94,7 +98,18 @@ Before writing a single line of code, the entire project was scoped out in an in
 | Backend | Node.js + Express.js |
 | Database | MySQL (via `mysql2`) |
 | Data Source | [MFAPI.in](https://www.mfapi.in/) — free, public, no auth required |
-| Deployment (planned) | Vercel (Frontend) + Railway (Backend + DB) |
+| Deployment | Frontend on **Vercel** · Backend on **Render** |
+
+---
+
+## 🚀 Live Deployment
+
+| Service | Link |
+|---|---|
+| Frontend | [mf-screener-three.vercel.app](https://mf-screener-three.vercel.app/) |
+| Backend Health Check | [mf-screener-p8gd.onrender.com/api/health](https://mf-screener-p8gd.onrender.com/api/health) |
+
+> Note: Backend is hosted on Render's free tier, so it may take 30–50 seconds to respond on the first request after a period of inactivity.
 
 ---
 
@@ -152,13 +167,15 @@ App runs at `http://localhost:5174`
 - [x] SIP Planner with instalment-count logic
 - [x] Investment Calculator (Lumpsum / SIP / Hybrid)
 - [x] Backend connected to MySQL
+- [x] Frontend deployed on Vercel, Backend deployed on Render
 
 **🔜 v2 — Planned**
+- [ ] **Database seeding** — pre-load fund data instead of hitting live API on every request
+- [ ] **24-hour fund data refresh cycle** — cache AMFI data and refresh once daily for faster load times and fewer external API calls
 - [ ] Live NAV-based current value & returns on Portfolio page
 - [ ] Filters & sorting on Screener (category, risk, returns, expense ratio)
 - [ ] Fund detail page with NAV history chart (Recharts)
 - [ ] User authentication (currently hardcoded `user_id`)
-- [ ] Deploy live on Vercel + Railway
 
 **❌ Deliberately Excluded from v1** *(to ship faster)*
 - Fund comparison page
