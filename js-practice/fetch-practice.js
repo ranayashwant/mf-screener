@@ -1,3 +1,5 @@
+// fetch practice for getting the top 5 direct funds sorted by name
+
 async function getcleanFunds() {
     try{
         const response = await fetch('https://api.mfapi.in/mf');

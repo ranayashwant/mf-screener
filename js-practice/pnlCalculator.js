@@ -1,3 +1,5 @@
+  //profite and loss calculator
+  
   const calculatePnL = (units, purchaseNav, currentNav) => {
     const investedAmount = units * purchaseNav;
     const currentValue = units * currentNav;
